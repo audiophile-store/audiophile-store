@@ -35,7 +35,8 @@ export default function Article() {
       inStock: product?.inStock
     }));
     enqueueSnackbar('The article has been added to your cart!', {
-      variant: 'default',
+      variant: 'success',
+      style: { backgroundColor: '#d87d4a', color: 'white' },
       anchorOrigin: { vertical: "bottom", horizontal: "center" },
     });
     setQuantity(1)

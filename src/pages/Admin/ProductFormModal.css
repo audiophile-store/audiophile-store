@@ -1,0 +1,210 @@
+.ProductFormModal-Paper {
+  border-radius: 12px !important;
+}
+
+.ProductFormModal-Title {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-weight: 700 !important;
+  font-size: 18px !important;
+  padding: 16px 24px !important;
+}
+
+.ProductFormModal-CloseBtn {
+  color: #999 !important;
+}
+
+.ProductFormModal-Content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  padding: 24px !important;
+}
+
+.ProductFormModal-Section {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.ProductFormModal-SectionTitle {
+  font-weight: 700 !important;
+  font-size: 12px !important;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  color: #d87d4a !important;
+}
+
+.ProductFormModal-Row {
+  display: flex;
+  gap: 14px;
+  align-items: center;
+}
+
+.ProductFormModal-InBoxRow {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+}
+
+.ProductFormModal-QtyField {
+  width: 90px;
+  flex-shrink: 0;
+}
+
+.ProductFormModal-RemoveItemBtn {
+  color: #999 !important;
+  flex-shrink: 0;
+}
+
+.ProductFormModal-RemoveItemBtn:hover {
+  color: #d32f2f !important;
+}
+
+.ProductFormModal-Thumbnail {
+  position: relative;
+  width: 80px;
+  height: 80px;
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #f5f5f5;
+  flex-shrink: 0;
+}
+
+.ProductFormModal-Thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.ProductFormModal-ThumbOverlay {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(0, 0, 0, 0.45);
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  cursor: pointer;
+  color: #fff;
+}
+
+.ProductFormModal-Thumbnail:hover .ProductFormModal-ThumbOverlay {
+  opacity: 1;
+}
+
+.ProductFormModal-ThumbBroken {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: #f0f0f0;
+  cursor: pointer;
+}
+
+.ProductFormModal-ThumbBrokenX {
+  color: #ccc;
+}
+
+.ProductFormModal-UploadPlaceholder {
+  width: 80px;
+  height: 80px;
+  border: 2px dashed #ccc;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 4px;
+  cursor: pointer;
+  color: #999;
+  background-color: #fafafa;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.ProductFormModal-UploadPlaceholder:hover {
+  border-color: #d87d4a;
+  color: #d87d4a;
+}
+
+.ProductFormModal-UploadPlaceholder .MuiTypography-root {
+  font-size: 10px !important;
+  font-weight: 600 !important;
+  text-align: center;
+  line-height: 1.2 !important;
+}
+
+.ProductFormModal-EmptyImages {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 24px;
+  border: 2px dashed #ddd;
+  border-radius: 10px;
+  color: #bbb;
+  cursor: pointer;
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.ProductFormModal-EmptyImages:hover {
+  border-color: #d87d4a;
+  color: #d87d4a;
+}
+
+.ProductFormModal-EmptyImages .MuiTypography-root {
+  font-size: 13px !important;
+  color: inherit !important;
+}
+
+.ProductFormModal-GalleryGrid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.ProductFormModal-AddItemBtn {
+  align-self: flex-start;
+  color: #d87d4a !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  font-size: 13px !important;
+}
+
+.ProductFormModal-Actions {
+  padding: 14px 24px !important;
+}
+
+.ProductFormModal-CancelBtn {
+  color: #666 !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+}
+
+.ProductFormModal-SaveBtn {
+  background-color: #d87d4a !important;
+  color: #fff !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  border-radius: 6px !important;
+  padding: 6px 24px !important;
+}
+
+.ProductFormModal-SaveBtn:hover {
+  background-color: #fbaf85 !important;
+}
+
+@media screen and (max-width: 600px) {
+  .ProductFormModal-Row {
+    flex-direction: column;
+  }
+
+  .ProductFormModal-QtyField {
+    width: 100%;
+  }
+}

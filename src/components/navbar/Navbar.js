@@ -4,7 +4,10 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Logo from '../../assets/icons/logo.svg'
+import LogoIcon from '../../assets/icons/logo-icon3.png'
 import Cart from '../../assets/icons/cart.svg'
+import PersonIcon from '@mui/icons-material/Person';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link, useLocation } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
@@ -14,6 +17,7 @@ import MenuNavBar from './MenuNavBar/MenuNavBar';
 import NavigationItems from './NavigationItems/NavigationItems';
 import Promoted from '../Promoted/Promoted';
 import { openCart } from '../../features/cart/cartSlice';
+import { enqueueSnackbar } from 'notistack';
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null)
@@ -23,7 +27,6 @@ function ResponsiveAppBar() {
   const location = useLocation();
   const borderPathNames = ['/', '/headphones', '/speakers', '/earphones'];
   const dispatch = useDispatch();
-  const prevCartLength = React.useRef(cartLength);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -34,7 +37,15 @@ function ResponsiveAppBar() {
   };
 
   const handleOpenCart = () => {
-    dispatch(openCart());
+    if (cartLength > 0) {
+      dispatch(openCart());
+    } else {
+      enqueueSnackbar('Your cart is empty. Add some products first!', {
+        variant: 'info',
+        style: { backgroundColor: '#d87d4a', color: 'white' },
+        anchorOrigin: { vertical: "bottom", horizontal: "center" },
+      });
+    }
   }
 
   React.useEffect(() => {
@@ -52,6 +63,7 @@ function ResponsiveAppBar() {
       <Link to='/'>
         <IconButton style={{ padding: '0'}}>
           <img className='Logo-Image' src={ Logo } alt='Audiophile' />
+          <img className='Logo-Icon' src={ LogoIcon } alt="Audiophile" />
         </IconButton>
       </Link>
     )

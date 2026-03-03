@@ -264,6 +264,140 @@
       "price": 1299,
       "inStock": 22
     },
+        {
+      "id": "e-07",
+      "newProduct": true,
+      "popularProduct": false,
+      "title": "USAMS BHUUS03 TWS Wireless Earbuds",
+      "shortName": "USAMS BHUUS03",
+      "generalInfo": "Enjoy premium wireless audio with the USAMS BHUUS03 TWS earbuds, delivering exceptional sound clarity and deep bass in a sleek, ultra-compact design. Engineered for everyday convenience, these true wireless earbuds combine advanced Bluetooth connectivity with impressive battery life and a comfortable ergonomic fit. Whether you're commuting, working out, or relaxing at home, the BHUUS03 provides reliable, high-quality audio performance that keeps up with your lifestyle. With intuitive touch controls and a pocket-friendly charging case, these earbuds offer premium features at an accessible price point.",
+      "images": {
+        "cover": "/Usams/photo-1.webp",
+        "main": "/Usams/photo-1.webp",
+        "gallery": ["/Usams/photo-1.webp"]
+      },
+      "type": "earphones",
+      "features": [
+        "The USAMS BHUUS03 features precision-tuned 13mm composite drivers delivering rich, balanced sound with punchy bass and detailed highs across all music genres. Bluetooth 5.3 technology ensures fast, stable wireless pairing with ultra-low power consumption for extended listening sessions. Built-in microphone with ENC noise reduction provides clear voice calls even in busy environments. Smart touch controls on each earbud allow effortless playback management, call handling, and voice assistant activation with simple taps.",
+        "Lightweight ergonomic design with soft silicone ear tips provides a secure, comfortable fit for hours of uninterrupted listening. IPX5 water resistance protects against sweat and rain, making these earbuds ideal for fitness and outdoor activities. Up to 7 hours of continuous playback per charge with the compact charging case extending total battery life to 28 hours. USB-C fast charging delivers 2 hours of playback from just 10 minutes of charging. Auto-pairing instantly connects to your device when you open the charging case."
+      ],
+      "inBox": [
+        {
+          "name": "Earbuds (Left & Right)",
+          "quantity": 2
+        },
+        {
+          "name": "Charging Case",
+          "quantity": 1
+        },
+        {
+          "name": "Silicone Ear Tips (S/M/L)",
+          "quantity": 6
+        },
+        {
+          "name": "USB-C Charging Cable",
+          "quantity": 1
+        },
+        {
+          "name": "User Manual",
+          "quantity": 1
+        }
+      ],
+      "price": 299,
+      "inStock": 50
+    },
+        {
+      "id": "h-11",
+      "newProduct": true,
+      "popularProduct": false,
+      "title": "ASUS ROG Cetra True Wireless Gaming Earbuds",
+      "shortName": "ASUS ROG Cetra",
+      "generalInfo": "Unleash your competitive edge with the ASUS ROG Cetra True Wireless gaming earbuds, purpose-built for gamers who demand ultra-low latency audio and immersive sound. Powered by ASUS ROG's gaming audio expertise, these earbuds deliver precise positional audio that gives you the edge in every battle. Whether you're gaming on your phone, Nintendo Switch, or PC, the ROG Cetra provides lag-free wireless audio with deep, punchy bass and crystal-clear highs. Designed for marathon gaming sessions and everyday use alike, these earbuds combine aggressive gaming aesthetics with premium comfort for the ultimate portable audio experience.",
+      "images": {
+        "cover": "/AsusRog/photo-1.webp",
+        "main": "/AsusRog/photo-1.webp",
+        "gallery": ["/AsusRog/photo-1.webp", "/AsusRog/photo-2.webp", "/AsusRog/photo-3.webp"]
+      },
+      "type": "earphones",
+      "features": [
+        "The ASUS ROG Cetra True Wireless features custom-tuned 10mm ASUS Essence drivers delivering powerful, detailed sound with deep bass impact and clear treble. Ultra-low latency Gaming Mode at 60ms ensures perfectly synced audio for competitive mobile and handheld gaming. Active Noise Cancellation technology blocks out distractions so you can focus entirely on your gameplay and music. AI-powered noise-cancelling microphones ensure crystal-clear voice communication with teammates even in noisy environments. Bluetooth 5.2 provides stable, efficient wireless connectivity across all your devices.",
+        "Ergonomic design with multiple ear tip sizes and lightweight construction at 5g per earbud ensures a secure, comfortable fit during intense gaming sessions. IPX4 water resistance handles sweat and splashes, making them suitable for workouts and outdoor use. Up to 5.5 hours of playtime per charge with ANC on, extending to 27 hours total with the compact RGB-lit charging case. USB-C fast charging gets you back in the game quickly. Customizable RGB lighting on the charging case adds signature ROG flair to your setup. Touch controls allow seamless switching between gaming mode, ANC, and music playback."
+      ],
+      "inBox": [
+        {
+          "name": "Earbuds (Left & Right)",
+          "quantity": 2
+        },
+        {
+          "name": "Charging Case",
+          "quantity": 1
+        },
+        {
+          "name": "Silicone Ear Tips (S/M/L)",
+          "quantity": 6
+        },
+        {
+          "name": "USB-C Charging Cable",
+          "quantity": 1
+        },
+        {
+          "name": "User Manual",
+          "quantity": 1
+        },
+        {
+          "name": "Quick Start Guide",
+          "quantity": 1
+        },
+        {
+          "name": "ROG Sticker",
+          "quantity": 1
+        }
+      ],
+      "price": 1499,
+      "inStock": 15
+    },
+    {
+      "id": "e-06",
+      "newProduct": true,
+      "popularProduct": false,
+      "title": "Moye Aurras 2 TWS Wireless Earbuds",
+      "shortName": "Moye TWS",
+      "generalInfo": "Discover premium sound at an unbeatable value with the Moye Aurras 2 TWS wireless earbuds. Engineered for everyday listening, these true wireless earbuds deliver rich, immersive audio with deep bass and crystal-clear highs that rival products at twice the price. Designed with comfort in mind, the lightweight ergonomic build ensures a secure fit for commuting, workouts, and all-day wear. With seamless Bluetooth connectivity, intuitive touch controls, and an extended battery life, the Moye Aurras 2 TWS is the perfect companion for music lovers and podcast enthusiasts who want quality without compromise.",
+      "images": {
+        "cover": "/MoyeTWS/photo-1.jpeg",
+        "main": "/MoyeTWS/photo-1.jpeg",
+        "gallery": ["/MoyeTWS/photo-1.jpeg", "/MoyeTWS/photo-2.jpeg", "/MoyeTWS/photo-3.jpeg"]
+      },
+      "type": "earphones",
+      "features": [
+        "The Moye Aurras 2 TWS features high-performance 10mm dynamic drivers with composite diaphragm delivering rich, detailed sound across the full frequency spectrum. Bluetooth 5.3 technology ensures ultra-stable wireless connectivity with low latency for seamless audio-video sync during video calls and media streaming. Built-in microphones with noise reduction algorithm provide clear voice pickup for hands-free calls even in noisy environments. Touch-sensitive controls on each earbud allow effortless management of music playback, calls, and voice assistant activation without reaching for your phone.",
+        "Ergonomic in-ear design with multiple silicone ear tip sizes guarantees a comfortable, secure fit for any ear shape. IPX4 water resistance protects against sweat and light rain, making these earbuds ideal for gym sessions and outdoor activities. Up to 6 hours of continuous playback per charge with the compact charging case extending total battery life to 24 hours, keeping you powered throughout the day. USB-C fast charging delivers quick top-ups when you're on the go. Lightweight construction at just 4.5g per earbud ensures fatigue-free listening during extended sessions."
+      ],
+      "inBox": [
+        {
+          "name": "Earbuds (Left & Right)",
+          "quantity": 2
+        },
+        {
+          "name": "Charging Case",
+          "quantity": 1
+        },
+        {
+          "name": "Silicone Ear Tips (S/M/L)",
+          "quantity": 6
+        },
+        {
+          "name": "USB-C Charging Cable",
+          "quantity": 1
+        },
+        {
+          "name": "User Manual",
+          "quantity": 1
+        }
+      ],
+      "price": 349,
+      "inStock": 40
+    },
     {
       "id": "h-07",
       "newProduct": true,

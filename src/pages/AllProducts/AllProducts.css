@@ -1,6 +1,6 @@
 .AllProducts {
-  padding: 50px 20px 0 20px;
-  margin-bottom: 50px;
+  padding: 30px 20px 0 20px;
+  
   display: flex;
   flex-direction: column;
   gap: 20px;
@@ -8,26 +8,26 @@
 
 @media screen and (min-width: 600px) {
  .AllProducts {
-    padding: 50px 100px 0 100px;
+   padding: 30px 100px;
   }
 }
 
 @media screen and (min-width: 900px) {
  .AllProducts {
-    padding: 50px 100px 0 100px;
+    padding: 30px 100px;
   }
 }
 
 @media screen and (min-width: 1200px) {
  .AllProducts {
-    padding: 80px 120px 0 120px;
-    margin-bottom: 80px;
+    padding: 30px 120px;
+    /* margin-bottom: 80px; */
   }
 }
 
 @media screen and (min-width: 1536px) {
  .AllProducts {
-    padding: 80px 200px 0 200px;
+     padding: 30px 200px;
   }
    .allproducts-grid-item {
     padding-left: 0 !important;
@@ -45,5 +45,39 @@
   .AllProducts {
     padding: 20px 50px 0 50px;
   }
+}
+
+.AllProducts-ShowMore {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.AllProducts-ShowMore-Button {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 12px 40px;
+  font-size: 13px !important;
+  font-weight: 600;
+  letter-spacing: 1.5px;
+  text-transform: uppercase;
+  color: #000;
+  border: 1px solid #000;
+  border-radius: 0;
+  transition: color 0.3s ease;
+}
+
+.AllProducts-ShowMore-Button:hover {
+  color: #d87d4a;
+  background-color: transparent !important;
+}
+
+.AllProducts-ShowMore-Arrow {
+  font-size: 12px;
+  display: block;
+  transform: rotate(90deg);
+  line-height: 0;
 }
 

@@ -19,7 +19,7 @@
   width: 100%;
   border-radius: 5px;
   box-sizing: border-box;
-  padding: 100px;
+  padding: 40px;
 }
 
 .product-gallery .thumbs-slider {
@@ -82,6 +82,9 @@
 @media (min-width: 900px) {
   .product-gallery {
     max-width: 400px;
+  }
+  .product-gallery .main-slider img {
+    /* padding: 100px; */
   }
 }
 

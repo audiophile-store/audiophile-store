@@ -1,12 +1,19 @@
 import { Box } from '@mui/system'
-import React from 'react'
+import React, { useState } from 'react'
 import './AllProducts.css'
-import { Grid } from '@mui/material';
+import { Button, Grid } from '@mui/material';
 import CollectionItem from '../../components/CollectionItem/CollectionItem';
 import ActiveLastBreadcrumb from '../../components/Breadcrumbs/Breadcrumbs';
 
+const ITEMS_PER_PAGE = 5;
+
 export default function AllProducts(props) {
   const { products } = props;
+  const [visibleCount, setVisibleCount] = useState(ITEMS_PER_PAGE);
+
+  const visible = (products || []).slice(0, visibleCount);
+  const hasMore = visibleCount < (products || []).length;
+
   return (
       <Box container className='AllProducts'>
       <Box className='AllProducts-Breadcrumbs'>
@@ -17,10 +24,10 @@ export default function AllProducts(props) {
           <ActiveLastBreadcrumb />
         </Grid>
         {
-          products?.map((item, index) => {
+          visible.map((item, index) => {
             const numberFromId = Number(item.id.split('-')[1]);
             return (
-              <Grid xl={11} lg={12} md={12} sm={12} xs={12} item className="allproducts-grid-item" key={index}>
+              <Grid xl={11} lg={12} md={12} sm={12} xs={12} item className="allproducts-grid-item" key={item.id}>
                 <CollectionItem
                   { ...item }
                   reverse={ numberFromId % 2 !== 0 }
@@ -31,6 +38,18 @@ export default function AllProducts(props) {
           })
         }
       </Grid>
+      { hasMore && (
+        <Box className='AllProducts-ShowMore'>
+          <Button
+            variant='text'
+            className='AllProducts-ShowMore-Button'
+            onClick={() => setVisibleCount(prev => prev + ITEMS_PER_PAGE)}
+          >
+            Show More
+            <span className='AllProducts-ShowMore-Arrow'>&#x276F;</span>
+          </Button>
+        </Box>
+      )}
       </Box>
   )
 }

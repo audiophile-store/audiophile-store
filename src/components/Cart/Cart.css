@@ -48,7 +48,9 @@ body.active-modal {
   transform: translateX(100%);
   opacity: 0;
   transition: all 0.4s ease;
+  background-color: #ffffff;
 }
+
 
 .ShowCart {
   right: 0;
@@ -62,17 +64,18 @@ body.active-modal {
 
 /* Header */
 .Cart-Header {
-  background-color: #d87d4a;
+  position: relative;
   padding: 16px;
   display: flex;
-  justify-content: center;
   align-items: center;
   height: 43px;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
+  color: #333;
+  gap: 10px;
 }
 
 .Cart-Header h6 {
-  color: white;
+  color: #333;
   font-size: 18px;
   font-weight: 600;
 }
@@ -102,14 +105,6 @@ body.active-modal {
   border-radius: 8px;
 }
 
-/* Quantity input already styled in QuantityInput.css */
-
-/* Total and buttons section */
-.Cart-Controls {
-  padding: 20px;
-  border-top: 1px solid #e0e0e0;
-}
-
 .Cart-Total {
   display: flex;
   justify-content: space-between;
@@ -127,51 +122,38 @@ body.active-modal {
   transform: scale(1.02);
 }
 
-/* Empty Cart styling */
-.Empty-Cart {
-  display: flex;
-  flex-direction: column;
-  height: 100%;
-  align-items: center;
-}
-
-.Empty-Cart-Header {
-  width: 100%;
-  background-color: #d87d4a;
-  position: relative;
-  padding: 16px;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  box-sizing: border-box;
-}
-
-.Empty-Cart-Header h6 {
-  color: white;
-  font-size: 18px;
-  font-weight: 600;
-}
-
-.Empty-Cart-Content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  margin-top: 30px;
-}
-
-.Empty-Cart-Image img {
-  width: 100px;
-  height: auto;
-  opacity: 0.8;
-}
-
 .Cart-Item-Title {
   font-size: 14px !important;
 }
 
 .Cart .quantity-input-container {
   width: 70px;
+}
+
+.Cart-Item-Info {
+  color: #333 !important;
+}
+
+.Cart-Total-Amount {
+  color: #333 !important;
+}
+
+.Cart-Discard-Button {
+  border-radius: 0 !important;
+  text-transform: capitalize !important;
+  border-radius: 5px !important;
+}
+
+.Cart-Proceed-Button {
+  background-color: #d87d4a;
+  color: white;
+  text-decoration: none;
+  padding: 10px;
+  border: 1px solid #d87d4a;
+  border-radius: 5px;
+  text-align: center;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 /* Responsive */
