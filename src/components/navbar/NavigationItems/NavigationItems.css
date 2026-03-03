@@ -7,10 +7,10 @@
 .Link {
   text-decoration: none;
   color: var(--secondary-color);
-  text-transform: uppercase;
+  text-transform: capitalize;
   font-family: 'Manrope', sans-serif;
   font-weight: bold;
-  font-size: 15px;
+  font-size: 14px;
   line-height: 25px;
   letter-spacing: 2px;
 }
@@ -26,7 +26,7 @@
 .MenuNavBar {
   text-decoration: none;
   color:black;
-  text-transform: uppercase;
+  text-transform: lowercase;
   font-family: 'Manrope', sans-serif;
   font-weight: bold;
   font-size: 15px;

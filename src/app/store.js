@@ -3,6 +3,7 @@ import counterReducer from '../features/counter/counterSlice'
 import cartReducer from '../features/cart/cartSlice'
 import productReducer from '../features/product/productSlice'
 import snackbarReducer from '../features/snackbar/snackbarSlice'
+import authReducer from '../features/auth/authSlice'
 
 export default configureStore({
   reducer: {
@@ -10,5 +11,6 @@ export default configureStore({
     cart: cartReducer,
     products: productReducer,
     snackbar: snackbarReducer,
+    auth: authReducer,
   },
 })
