@@ -10,9 +10,10 @@ import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
 import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
 import LoginIcon from '@mui/icons-material/Login';
 import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
+import PersonIcon from '@mui/icons-material/Person';
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { Grid, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
+import { Grid, Menu, MenuItem, ListItemIcon, ListItemText, Typography } from '@mui/material';
 import './Navbar.css';
 import MenuNavBar from './MenuNavBar/MenuNavBar';
 import NavigationItems from './NavigationItems/NavigationItems';
@@ -26,7 +27,7 @@ function ResponsiveAppBar() {
   const [anchorElAccount, setAnchorElAccount] = React.useState(null);
   const [cartAnimate, setCartAnimate] = React.useState(false);
   const cartItems = useSelector((state) => state.cart.items);
-  const { isLoggedIn } = useSelector((state) => state.auth);
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
   const cartLength = cartItems.length;
   const location = useLocation();
   const navigate = useNavigate();
@@ -108,20 +109,52 @@ function ResponsiveAppBar() {
             >
             <Toolbar style={ toolbarStyle() }>
               <Grid container width='100%' justifyContent='space-between' alignItems='center'>
-                <Grid xl={ 1 } md={ 4 } item className='Toolbar-Item-1'>
+                <Grid xl={ 1 } md={ 3 } item className='Toolbar-Item-1'>
                   <Box display='flex' alignItems='center'>
                     <MenuNavBar openMenuBar={ handleOpenNavMenu } closeMenuBar={ handleCloseNavMenu } anchor={ anchorElNav } />
                     { renderLogo() }
                   </Box>
                 </Grid>
-                <Grid xl={ 10 } md={ 4 } item className='Toolbar-Item-2'>
+                <Grid xl={ 10 } md={ 6 } item className='Toolbar-Item-2'>
                   <NavigationItems />
                 </Grid>
-                <Grid style={ location.pathname === '/checkout' ? { visibility: 'hidden' } : { visibility: 'visible' } } xl={ 1 } md={ 4 } item className='Toolbar-Item-3'>
+                <Grid style={ location.pathname === '/checkout' ? { visibility: 'hidden' } : { visibility: 'visible' } } xl={ 1 } md={ 3 } item className='Toolbar-Item-3'>
                     {isLoggedIn ? (
-                      <IconButton onClick={() => dispatch(logout())} className="Nav-IconBtn">
-                        <LogoutOutlinedIcon />
-                      </IconButton>
+                      <>
+                        <Box
+                          display='flex'
+                          alignItems='center'
+                          gap={ 0.5 }
+                          className="Nav-ProfileGroup"
+                          onClick={ handleOpenAccountMenu }
+                          sx={ { cursor: 'pointer' } }
+                        >
+                          <Box className="Nav-AccountTrigger" sx={ { display: 'flex', alignItems: 'center' } }>
+                            <PersonIcon />
+                          </Box>
+                          <Typography variant="caption" className="Nav-Greeting">
+                            Hi, { user?.name?.split(' ')[0] || 'there' }
+                          </Typography>
+                        </Box>
+                        <Menu
+                          anchorEl={anchorElAccount}
+                          open={Boolean(anchorElAccount)}
+                          onClose={handleCloseAccountMenu}
+                          disableScrollLock
+                          PaperProps={{ className: 'Nav-AccountMenu' }}
+                          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                        >
+                          <MenuItem onClick={() => { handleCloseAccountMenu(); }} className="Nav-AccountMenu-Item">
+                            <ListItemIcon><PersonIcon fontSize="small" /></ListItemIcon>
+                            <ListItemText>My Profile</ListItemText>
+                          </MenuItem>
+                          <MenuItem onClick={() => { handleCloseAccountMenu(); dispatch(logout()); }} className="Nav-AccountMenu-Item">
+                            <ListItemIcon><LogoutOutlinedIcon fontSize="small" /></ListItemIcon>
+                            <ListItemText>Log out</ListItemText>
+                          </MenuItem>
+                        </Menu>
+                      </>
                     ) : (
                       <>
                         <IconButton onClick={handleOpenAccountMenu} className="Nav-IconBtn">
@@ -131,6 +164,7 @@ function ResponsiveAppBar() {
                           anchorEl={anchorElAccount}
                           open={Boolean(anchorElAccount)}
                           onClose={handleCloseAccountMenu}
+                          disableScrollLock
                           PaperProps={{ className: 'Nav-AccountMenu' }}
                           transformOrigin={{ horizontal: 'right', vertical: 'top' }}
                           anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
@@ -146,10 +180,22 @@ function ResponsiveAppBar() {
                         </Menu>
                       </>
                     )}
-                    <IconButton className={`Nav-IconBtn Nav-CartBtn ${cartAnimate ? 'cart-bounce' : ''}`} onClick={handleOpenCart}>
-                      {cartLength > 0 && <Box className='Nav-Cart-Quantity'>{cartLength}</Box>}
-                      <ShoppingCartOutlinedIcon />
-                    </IconButton>
+                    <Box
+                      display='flex'
+                      alignItems='center'
+                      gap={ 0 }
+                      className="Nav-CartGroup"
+                      onClick={ handleOpenCart }
+                      sx={ { cursor: 'pointer' } }
+                    >
+                      <IconButton className={ `Nav-IconBtn Nav-CartBtn ${cartAnimate ? 'cart-bounce' : ''}` } disableRipple>
+                        { cartLength > 0 && <Box className='Nav-Cart-Quantity'>{ cartLength }</Box> }
+                        <ShoppingCartOutlinedIcon />
+                      </IconButton>
+                      <Typography variant="caption" className="Nav-Greeting">
+                        Cart
+                      </Typography>
+                    </Box>
                   </Grid>
               </Grid>
             </Toolbar>

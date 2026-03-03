@@ -9,6 +9,7 @@ import {
 } from '@mui/material';
 import { Link, useNavigate, useLocation } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import { enqueueSnackbar } from 'notistack';
 import { login, clearError } from '../../../features/auth/authSlice';
 import './SignIn.css';
 
@@ -20,7 +21,7 @@ export default function SignIn() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const location = useLocation();
-  const { isLoggedIn, error } = useSelector((state) => state.auth);
+  const { isLoggedIn, error, user } = useSelector((state) => state.auth);
 
   const from = location.state?.from || '/';
 
@@ -28,9 +29,15 @@ export default function SignIn() {
 
   useEffect(() => {
     if (isLoggedIn) {
+      const firstName = user?.name?.split(' ')[0] || 'there';
+      enqueueSnackbar(`Welcome back, ${firstName}!`, {
+        variant: 'success',
+        style: { backgroundColor: '#d87d4a', color: 'white' },
+        anchorOrigin: { vertical: 'bottom', horizontal: 'center' },
+      });
       navigate(from, { replace: true });
     }
-  }, [isLoggedIn, navigate, from]);
+  }, [isLoggedIn, user?.name, navigate, from]);
 
   useEffect(() => {
     return () => {

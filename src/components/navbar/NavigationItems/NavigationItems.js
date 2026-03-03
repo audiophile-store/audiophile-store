@@ -15,7 +15,7 @@ export default function NavigationItems({ calledInFooter}) {
         sx={ {
           flexGrow: 1,
           gap: 2,
-          display: { xs: `${calledInFooter ? 'flex' : 'none'}`, md: 'flex' },
+          display: calledInFooter ? { xs: 'flex' } : { xs: 'none', '@media (min-width: 1031px)': { display: 'flex' } },
           flexDirection: { xs: `${calledInFooter ? 'column' : 'row'}`, sm: 'row' },
           justifyContent: { xs: 'center', sm: `${!calledInFooter ? 'center' : 'flex-end'}` },
           alignItems: 'center',

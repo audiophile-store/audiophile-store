@@ -11,7 +11,7 @@ export default function MenuNavBar({ openMenuBar, closeMenuBar, anchor }) {
   const isAdmin = isLoggedIn && user?.isAdmin;
 
   return (
-    <Box sx={ { flexGrow: 1, display: { sm: 'flex', md: 'none' } } }>
+    <Box sx={ { flexGrow: 1, display: 'flex', '@media (min-width: 1031px)': { display: 'none' } } }>
       <IconButton
         size="large"
         onClick={ openMenuBar }

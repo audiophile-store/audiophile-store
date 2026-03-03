@@ -232,3 +232,57 @@
 .Admin-DeleteDialog-ConfirmBtn:hover {
   background-color: #b71c1c !important;
 }
+
+
+@media screen and (max-width: 460px) {
+  .Admin-ProductImage {
+    display: none;
+  }
+
+  .Admin-ProductCell {
+    gap: 8px;
+  }
+
+  .Admin-Title {
+    font-size: 1.25rem !important;
+  }
+
+  .Admin-Subtitle {
+    font-size: 12px !important;
+  }
+
+  .Admin-Search .MuiOutlinedInput-root {
+    font-size: 13px !important;
+  }
+
+  .Admin-TableHead .MuiTableCell-root {
+    font-size: 10px !important;
+    padding: 10px 12px !important;
+  }
+
+  .Admin-TableRow .MuiTableCell-root {
+    padding: 10px 12px !important;
+  }
+
+  .Admin-ProductName {
+    font-size: 12px !important;
+  }
+
+  .Admin-ProductId {
+    font-size: 11px !important;
+  }
+
+  .Admin-TypeChip {
+    font-size: 10px !important;
+    height: 22px !important;
+  }
+
+  .Admin-Price,
+  .Admin-Stock {
+    font-size: 12px !important;
+  }
+
+  .Admin-Empty {
+    font-size: 12px !important;
+  }
+}
