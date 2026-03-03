@@ -1,10 +1,14 @@
 import { Box } from '@mui/material'
 import React from 'react'
 import { NavLink } from 'react-router-dom'
+import { useSelector } from 'react-redux'
 import { pages } from '../../../app/constants'
 import './NavigationItems.css'
 
 export default function NavigationItems({ calledInFooter}) {
+  const { isLoggedIn, user } = useSelector((state) => state.auth);
+  const isAdmin = isLoggedIn && user?.isAdmin;
+
   return (
    <Box display='flex' justifyContent='space-between' alignItems='center'>
       <Box className='Nav-Items'
@@ -25,21 +29,15 @@ export default function NavigationItems({ calledInFooter}) {
             { page.title }
           </NavLink>
         )) }
+        { isAdmin && (
+          <NavLink
+            activeClassName='active'
+            to='/admin'
+            className='Link'>
+            Admin
+          </NavLink>
+        )}
       </Box>
-      {/* <Box display='flex' gap={2}>
-        <NavLink
-          activeClassName='active'
-          to={ '/login' }
-          className='Link'>
-          Login
-        </NavLink>
-        <NavLink
-          activeClassName='active'
-          to={ '/login' }
-          className='Link'>
-          Signup
-        </NavLink>
-      </Box> */}
    </Box>
   )
 }

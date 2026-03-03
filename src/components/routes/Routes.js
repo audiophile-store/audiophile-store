@@ -1,5 +1,6 @@
 import React from "react";
 import { Route, Routes, useLocation } from "react-router-dom";
+import ProtectedRoute from './ProtectedRoute';
 import Home from '../../pages/Home/Home';
 import Collection from '../../pages/Collection/Collection';
 import AllProducts from '../../pages/AllProducts/AllProducts';
@@ -8,6 +9,8 @@ import Article from '../../pages/Article/Article';
 import Checkout from '../../pages/Checkout/Checkout';
 import OrderSuccess from '../../pages/OrderSuccess/OrderSuccess';
 import Admin from '../../pages/Admin/Admin';
+import SignIn from '../../pages/Auth/SignIn/SignIn';
+import SignUp from '../../pages/Auth/SignUp/SignUp';
 
 const PageRoutes = () => {
   const location = useLocation();
@@ -26,7 +29,9 @@ const PageRoutes = () => {
         <Route path="/article/:id" element={ <Article/> } />
         <Route path="/checkout" element={ <Checkout /> } />
         <Route path="/order-success" element={ <OrderSuccess /> } />
-        <Route path="/admin" element={ <Admin /> } />
+        <Route path="/admin" element={ <ProtectedRoute requireAdmin><Admin /></ProtectedRoute> } />
+        <Route path="/sign-in" element={ <SignIn /> } />
+        <Route path="/sign-up" element={ <SignUp /> } />
       </Routes>
   );
 }

@@ -1,0 +1,112 @@
+.SignIn {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: calc(100vh - 200px);
+  padding: 40px 20px;
+}
+
+.SignIn-Card {
+  width: 100%;
+  max-width: 420px;
+  background-color: #fff;
+  border-radius: 12px;
+  padding: 40px 32px;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+}
+
+.SignIn-Title {
+  font-weight: 700 !important;
+  letter-spacing: 0.5px;
+  margin-bottom: 6px !important;
+}
+
+.SignIn-Subtitle {
+  color: #888;
+  margin-bottom: 28px !important;
+}
+
+.SignIn-Form {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+}
+
+.SignIn-Form .MuiOutlinedInput-root {
+  border-radius: 8px;
+}
+
+.SignIn-Options {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-top: -4px;
+}
+
+.SignIn-Checkbox.Mui-checked {
+  color: #d87d4a !important;
+}
+
+.SignIn-ForgotLink {
+  color: #d87d4a !important;
+  cursor: pointer;
+  font-weight: 500 !important;
+  font-size: 13px !important;
+  transition: color 0.2s ease;
+}
+
+.SignIn-ForgotLink:hover {
+  color: #fbaf85 !important;
+}
+
+.SignIn-Error {
+  color: #d32f2f !important;
+  font-size: 13px !important;
+  text-align: center;
+  margin-top: -6px !important;
+}
+
+.SignIn-SubmitBtn {
+  background-color: #d87d4a !important;
+  color: #fff !important;
+  text-transform: none !important;
+  font-weight: 600 !important;
+  font-size: 15px !important;
+  border-radius: 8px !important;
+  padding: 10px 0 !important;
+  margin-top: 4px !important;
+  letter-spacing: 0.5px;
+}
+
+.SignIn-SubmitBtn:hover {
+  background-color: #fbaf85 !important;
+}
+
+.SignIn-SubmitBtn.Mui-disabled {
+  background-color: #e0e0e0 !important;
+  color: #999 !important;
+}
+
+.SignIn-Footer {
+  text-align: center;
+  margin-top: 24px !important;
+  color: #666 !important;
+}
+
+.SignIn-SignUpLink {
+  color: #d87d4a;
+  font-weight: 600;
+  text-decoration: none;
+  transition: color 0.2s ease;
+}
+
+.SignIn-SignUpLink:hover {
+  color: #fbaf85;
+}
+
+@media screen and (max-width: 480px) {
+  .SignIn-Card {
+    padding: 32px 20px;
+    box-shadow: none;
+  }
+}

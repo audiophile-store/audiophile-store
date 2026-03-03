@@ -5,26 +5,31 @@ import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Logo from '../../assets/icons/logo.svg'
 import LogoIcon from '../../assets/icons/logo-icon3.png'
-import Cart from '../../assets/icons/cart.svg'
-import PersonIcon from '@mui/icons-material/Person';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
-import { Link, useLocation } from 'react-router-dom'
-import Button from '@mui/material/Button';
+import ShoppingCartOutlinedIcon from '@mui/icons-material/ShoppingCartOutlined';
+import PersonOutlineIcon from '@mui/icons-material/PersonOutline';
+import LogoutOutlinedIcon from '@mui/icons-material/LogoutOutlined';
+import LoginIcon from '@mui/icons-material/Login';
+import PersonAddOutlinedIcon from '@mui/icons-material/PersonAddOutlined';
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux';
-import { Grid } from '@mui/material';
+import { Grid, Menu, MenuItem, ListItemIcon, ListItemText } from '@mui/material';
 import './Navbar.css';
 import MenuNavBar from './MenuNavBar/MenuNavBar';
 import NavigationItems from './NavigationItems/NavigationItems';
 import Promoted from '../Promoted/Promoted';
 import { openCart } from '../../features/cart/cartSlice';
+import { logout } from '../../features/auth/authSlice';
 import { enqueueSnackbar } from 'notistack';
 
 function ResponsiveAppBar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null)
+  const [anchorElAccount, setAnchorElAccount] = React.useState(null);
   const [cartAnimate, setCartAnimate] = React.useState(false);
   const cartItems = useSelector((state) => state.cart.items);
+  const { isLoggedIn } = useSelector((state) => state.auth);
   const cartLength = cartItems.length;
   const location = useLocation();
+  const navigate = useNavigate();
   const borderPathNames = ['/', '/headphones', '/speakers', '/earphones'];
   const dispatch = useDispatch();
 
@@ -34,6 +39,14 @@ function ResponsiveAppBar() {
 
   const handleCloseNavMenu = () => {
     setAnchorElNav(null);
+  };
+
+  const handleOpenAccountMenu = (event) => {
+    setAnchorElAccount(event.currentTarget);
+  };
+
+  const handleCloseAccountMenu = () => {
+    setAnchorElAccount(null);
   };
 
   const handleOpenCart = () => {
@@ -105,12 +118,38 @@ function ResponsiveAppBar() {
                   <NavigationItems />
                 </Grid>
                 <Grid style={ location.pathname === '/checkout' ? { visibility: 'hidden' } : { visibility: 'visible' } } xl={ 1 } md={ 4 } item className='Toolbar-Item-3'>
-                    <Button className={cartAnimate ? 'cart-bounce' : ''} onClick={ handleOpenCart }>
-                      {
-                        cartLength && <Box className='Nav-Cart-Quantity'>{ cartLength }</Box>
-                      }
-                      <img src={ Cart } alt="Add to Cart" />
-                    </Button>
+                    {isLoggedIn ? (
+                      <IconButton onClick={() => dispatch(logout())} className="Nav-IconBtn">
+                        <LogoutOutlinedIcon />
+                      </IconButton>
+                    ) : (
+                      <>
+                        <IconButton onClick={handleOpenAccountMenu} className="Nav-IconBtn">
+                          <PersonOutlineIcon />
+                        </IconButton>
+                        <Menu
+                          anchorEl={anchorElAccount}
+                          open={Boolean(anchorElAccount)}
+                          onClose={handleCloseAccountMenu}
+                          PaperProps={{ className: 'Nav-AccountMenu' }}
+                          transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                          anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
+                        >
+                          <MenuItem onClick={() => { handleCloseAccountMenu(); navigate('/sign-in'); }} className="Nav-AccountMenu-Item">
+                            <ListItemIcon><LoginIcon fontSize="small" /></ListItemIcon>
+                            <ListItemText>Sign in</ListItemText>
+                          </MenuItem>
+                          <MenuItem onClick={() => { handleCloseAccountMenu(); navigate('/sign-up'); }} className="Nav-AccountMenu-Item">
+                            <ListItemIcon><PersonAddOutlinedIcon fontSize="small" /></ListItemIcon>
+                            <ListItemText>Create Account</ListItemText>
+                          </MenuItem>
+                        </Menu>
+                      </>
+                    )}
+                    <IconButton className={`Nav-IconBtn Nav-CartBtn ${cartAnimate ? 'cart-bounce' : ''}`} onClick={handleOpenCart}>
+                      {cartLength > 0 && <Box className='Nav-Cart-Quantity'>{cartLength}</Box>}
+                      <ShoppingCartOutlinedIcon />
+                    </IconButton>
                   </Grid>
               </Grid>
             </Toolbar>
