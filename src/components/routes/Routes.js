@@ -7,6 +7,7 @@ import data from '../../db/products.json';
 import Article from '../../pages/Article/Article';
 import Checkout from '../../pages/Checkout/Checkout';
 import OrderSuccess from '../../pages/OrderSuccess/OrderSuccess';
+import Admin from '../../pages/Admin/Admin';
 
 const PageRoutes = () => {
   const location = useLocation();
@@ -25,6 +26,7 @@ const PageRoutes = () => {
         <Route path="/article/:id" element={ <Article/> } />
         <Route path="/checkout" element={ <Checkout /> } />
         <Route path="/order-success" element={ <OrderSuccess /> } />
+        <Route path="/admin" element={ <Admin /> } />
       </Routes>
   );
 }

@@ -4,7 +4,10 @@ import Box from '@mui/material/Box';
 import Toolbar from '@mui/material/Toolbar';
 import IconButton from '@mui/material/IconButton';
 import Logo from '../../assets/icons/logo.svg'
+import LogoIcon from '../../assets/icons/logo-icon3.png'
 import Cart from '../../assets/icons/cart.svg'
+import PersonIcon from '@mui/icons-material/Person';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link, useLocation } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';
@@ -60,6 +63,7 @@ function ResponsiveAppBar() {
       <Link to='/'>
         <IconButton style={{ padding: '0'}}>
           <img className='Logo-Image' src={ Logo } alt='Audiophile' />
+          <img className='Logo-Icon' src={ LogoIcon } alt="Audiophile" />
         </IconButton>
       </Link>
     )
