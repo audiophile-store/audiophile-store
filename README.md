@@ -1,6 +1,6 @@
 # Audiophile
 
-A demo e-commerce storefront for audio equipment, built with React and Redux Toolkit.
+A demo e-commerce storefront for audio equipment, built with React, TypeScript and Redux Toolkit.
 
 **Live demo: [audiophile-store-beryl.vercel.app](https://audiophile-store-beryl.vercel.app/)**
 
@@ -35,12 +35,13 @@ A demo e-commerce storefront for audio equipment, built with React and Redux Too
 
 | Area | Choice |
 | --- | --- |
+| Language | TypeScript 5 (strict mode) |
 | UI | React 18, Material UI 5 |
 | State | Redux Toolkit, React Redux |
 | Routing | React Router 6 |
 | Carousel | Swiper 11 |
 | Notifications | notistack |
-| Build | Create React App |
+| Build | Vite 5 |
 | Hosting | Vercel |
 
 ## Running locally
@@ -49,10 +50,11 @@ A demo e-commerce storefront for audio equipment, built with React and Redux Too
 git clone https://github.com/xarambash/audiophile-store.git
 cd audiophile-store
 npm install
-npm start
+npm run dev
 ```
 
-The app runs at `http://localhost:3000`. Use `npm run build` to produce a production bundle.
+The app runs at `http://localhost:5173`. `npm run build` type-checks the project and writes a
+production bundle to `dist/`, and `npm run preview` serves that bundle locally.
 
 ## Project structure
 
@@ -63,7 +65,8 @@ src/
 ├── features/     # Redux slices (cart, products, snackbar)
 ├── pages/        # Route-level views
 ├── db/           # Product catalogue (static JSON)
-└── utils/        # Formatting helpers and MUI theme
+├── types/        # Shared TypeScript types
+└── utils/        # Formatting helpers, image resolution, MUI theme
 ```
 
 ## Notes
