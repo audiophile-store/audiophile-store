@@ -1,17 +1,13 @@
 import React from 'react'
-import { Button, Typography } from '@mui/material';
+import { Typography } from '@mui/material';
 import { Box } from '@mui/system'
 import './CollectionItem.css'
-import { Link, useNavigate } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import { formatCurrency } from '../../utils/utils';
 
 export default function CollectionItem({ title, newProduct, generalInfo, id, images, price,  reverse }) {
   const thumbnail = require(`/src/assets/images/products${images?.main}`);
-  const navigate = useNavigate();
 
-  const redirectToArticle = () => {
-    navigate(`/article/${id}`);
-  };
   return (
     <Link to={`/article/${id}`} className='Collection-Item'>
       <Box className='Collection-Item-Thumbnail' style={ { backgroundImage: `url(${thumbnail})` } }>

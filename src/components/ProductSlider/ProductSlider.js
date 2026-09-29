@@ -6,7 +6,6 @@ import 'swiper/css/pagination';
 import 'swiper/css';
 import './ProductSlider.css';
 import { Link } from 'react-router-dom';
-import data from '../../db/products.json';
 import { formatCurrency } from '../../utils/utils';
 
 export default function ProductSlider({ products }) {

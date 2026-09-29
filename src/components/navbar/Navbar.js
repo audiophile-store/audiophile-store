@@ -6,8 +6,6 @@ import IconButton from '@mui/material/IconButton';
 import Logo from '../../assets/icons/logo.svg'
 import LogoIcon from '../../assets/icons/logo-icon3.png'
 import Cart from '../../assets/icons/cart.svg'
-import PersonIcon from '@mui/icons-material/Person';
-import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 import { Link, useLocation } from 'react-router-dom'
 import Button from '@mui/material/Button';
 import { useDispatch, useSelector } from 'react-redux';

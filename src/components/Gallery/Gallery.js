@@ -8,7 +8,7 @@ import "./Gallery.css";
 
 import { Pagination } from 'swiper/modules';
 const Gallery = ({ images }) => {
-  const [thumbsSwiper, setThumbsSwiper] = React.useState(null);
+  const [thumbsSwiper] = React.useState(null);
 
   return (
     <div className="product-gallery">
