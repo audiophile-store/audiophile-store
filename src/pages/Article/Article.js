@@ -13,6 +13,7 @@ import { useSnackbar } from 'notistack';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'; 
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import ActiveLastBreadcrumb from '../../components/Breadcrumbs/Breadcrumbs';
+import { formatCurrency } from '../../utils/utils';
 
 export default function Article() {
   const { id } = useParams();
@@ -132,7 +133,7 @@ export default function Article() {
             </Box>
           </Box>
           <Box className='Article-Price' >
-            <Typography variant='h4'>$ { product.price },00</Typography>
+            <Typography variant='h4'>{ formatCurrency(product.price) }</Typography>
           </Box>
           <Box className='Article-Controls'>
             <Box className='Article-Controls-Form'>

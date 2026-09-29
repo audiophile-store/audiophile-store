@@ -14,11 +14,12 @@ const Checkout = () => {
   const cartItems = useSelector((state) => state.cart.items);
   const dispatch = useDispatch();
   const price = cartItems.reduce((acc, item) => acc + item.price * item.quantity, 0);
-  const vatAmount = price * VAT_RATE;
-  const totalPrice = price + vatAmount + SHIPPING_COST;
+  const vatAmount = price - price / (1 + VAT_RATE);
+  const netPrice = price - vatAmount;
+  const totalPrice = price + SHIPPING_COST;
   
   // Format for display
-  const formattedPrice = formatCurrency(price);
+  const formattedNetPrice = formatCurrency(netPrice);
   const formattedVAT = formatCurrency(vatAmount);
   const formattedShipping = formatCurrency(SHIPPING_COST);
   const formattedTotal = formatCurrency(totalPrice);
@@ -242,16 +243,16 @@ const Checkout = () => {
               <Divider sx={{ my: 2 }} />
               {/* Total */}
               <Box display="flex" justifyContent="space-between" mb={1}>
-                <Typography variant="body2">Total</Typography>
-                <Typography variant="body2">{ formattedPrice }</Typography>
+                <Typography variant="body2">Subtotal (excl. VAT)</Typography>
+                <Typography variant="body2">{ formattedNetPrice }</Typography>
+              </Box>
+              <Box display="flex" justifyContent="space-between" mb={1}>
+                <Typography variant="body2">VAT (20%)</Typography>
+                <Typography variant="body2">{ formattedVAT }</Typography>
               </Box>
               <Box display="flex" justifyContent="space-between" mb={1}>
                 <Typography variant="body2">Shipping</Typography>
                 <Typography variant="body2">{ formattedShipping }</Typography>
-              </Box>
-              <Box display="flex" justifyContent="space-between" mb={1}>
-                <Typography variant="body2">VAT (Included)</Typography>
-                <Typography variant="body2">{ formattedVAT }</Typography>
               </Box>
 
               <Divider sx={{ my: 2 }} />

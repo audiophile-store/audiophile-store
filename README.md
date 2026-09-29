@@ -1,70 +1,88 @@
-# Getting Started with Create React App
+# Audiophile
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A demo e-commerce storefront for audio equipment, built with React and Redux Toolkit.
 
-## Available Scripts
+**Live demo: [audiophile-store-beryl.vercel.app](https://audiophile-store-beryl.vercel.app/)**
 
-In the project directory, you can run:
+---
 
-### `npm start`
+## Screenshots
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+### Home
+![Home page](docs/screenshots/home.png)
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### Product page
+![Product page](docs/screenshots/product.png)
 
-### `npm test`
+### Cart
+![Shopping cart](docs/screenshots/cart.png)
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Checkout
+![Checkout page](docs/screenshots/checkout.png)
 
-### `npm run build`
+---
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Features
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- Browse products by category (headphones, speakers, earphones) or view the full catalogue
+- Product detail pages with an image gallery, specs, and stock availability
+- Slide-in cart with quantity controls that respect the available stock
+- Checkout with form validation, VAT breakdown, shipping, and order confirmation
+- Client-side routing with breadcrumbs and scroll restoration
+- Responsive layout for mobile, tablet, and desktop
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Tech stack
 
-### `npm run eject`
+| Area | Choice |
+| --- | --- |
+| UI | React 18, Material UI 5 |
+| State | Redux Toolkit, React Redux |
+| Routing | React Router 6 |
+| Carousel | Swiper 11 |
+| Notifications | notistack |
+| Build | Create React App |
+| Hosting | Vercel |
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+## Running locally
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+```bash
+git clone https://github.com/xarambash/audiophile-store.git
+cd audiophile-store
+npm install
+npm start
+```
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+The app runs at `http://localhost:3000`. Use `npm run build` to produce a production bundle.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+## Project structure
 
-## Learn More
+```
+src/
+├── app/          # Redux store and shared constants
+├── components/   # Reusable UI components
+├── features/     # Redux slices (cart, products, snackbar)
+├── pages/        # Route-level views
+├── db/           # Product catalogue (static JSON)
+└── utils/        # Formatting helpers and MUI theme
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+## Notes
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+This is a portfolio demo, not a production store. There is no backend: the catalogue is
+served from a local JSON file, the cart lives in memory only, and no payment is ever
+processed. Prices are displayed in euros with VAT included.
 
-### Code Splitting
+Product images and brand names belong to their respective owners and are used here purely
+for demonstration purposes.
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+## What I'd do next
 
-### Analyzing the Bundle Size
+- Move the catalogue behind a real API and persist orders
+- Persist the cart across page reloads
+- Add unit tests for the cart and checkout logic
+- Finish the admin panel (product create, edit, and delete are currently UI-only)
+- Add an error boundary and a 404 page
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+## Author
 
-### Making a Progressive Web App
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Stefan Rakonjac — [@xarambash](https://github.com/xarambash)

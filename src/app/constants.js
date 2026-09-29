@@ -21,4 +21,4 @@ export const productImagesBasePath = '/src/assets/images/products'
 
 export const VAT_RATE = 0.2;
 
-export const SHIPPING_COST = 50;
+export const SHIPPING_COST = 10;

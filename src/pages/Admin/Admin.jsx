@@ -24,6 +24,7 @@ import SearchIcon from '@mui/icons-material/Search';
 import AddIcon from '@mui/icons-material/Add';
 import { useSelector } from 'react-redux';
 import ProductFormModal from './ProductFormModal';
+import { formatCurrency } from '../../utils/utils';
 import './Admin.css';
 
 const TYPE_LABELS = {
@@ -142,7 +143,7 @@ export default function Admin() {
                 </TableCell>
                 <TableCell align="right">
                   <Typography variant="body2" className="Admin-Price">
-                    ${product.price.toLocaleString()}
+                    {formatCurrency(product.price)}
                   </Typography>
                 </TableCell>
                 <TableCell align="right">

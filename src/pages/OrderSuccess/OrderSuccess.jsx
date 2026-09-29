@@ -3,6 +3,7 @@ import { Box, Container, Typography, Button, Card, CardContent, Divider } from '
 import { useNavigate, useLocation } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import './OrderSuccess.css';
+import { formatCurrency } from '../../utils/utils';
 
 const OrderSuccess = () => {
   const navigate = useNavigate();
@@ -37,7 +38,7 @@ const OrderSuccess = () => {
             <Box display="flex" justifyContent="space-between" mb={2}>
               <Typography variant="body1">Total Amount:</Typography>
               <Typography variant="body1" fontWeight="bold" color="primary">
-                {total || '$0.00'}
+                {total || formatCurrency(0)}
               </Typography>
             </Box>
             
