@@ -18,6 +18,7 @@ body.active-modal {
   position: fixed;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   top: 0;
   left: 0;
   z-index: 10;
@@ -28,6 +29,7 @@ body.active-modal {
   position: fixed;
   width: 100vw;
   height: 100vh;
+  height: 100dvh;
   top: 0;
   left: 0;
   z-index: 20;
@@ -49,6 +51,8 @@ body.active-modal {
   opacity: 0;
   transition: all 0.4s ease;
   background-color: #ffffff;
+  padding: 15px;
+  box-sizing: border-box;
 }
 
 .ShowCart {
@@ -153,6 +157,7 @@ body.active-modal {
   text-align: center;
   font-size: 14px;
   font-weight: bold;
+  box-sizing: border-box;
 }
 
 /* Responsive */
@@ -164,6 +169,32 @@ body.active-modal {
 
 @media (min-width: 900px) {
   .Cart {
-    width: 380px;
+    width: 450px;
+  }
+}
+
+/* Landscape phones: limited vertical space */
+@media (max-height: 500px) and (orientation: landscape) {
+  .Cart {
+    padding: 8px;
+  }
+  .Cart-Header {
+    height: auto;
+    padding: 8px 16px;
+  }
+  .Cart-Footer {
+    padding: 8px 16px !important;
+  }
+  .Cart-Footer .MuiBox-root {
+    margin-bottom: 8px !important;
+  }
+  .Cart-Actions {
+    flex-direction: row !important;
+  }
+  .Cart-Actions .Cart-Proceed-Button,
+  .Cart-Actions .Cart-Discard-Button {
+    flex: none;
+    width: calc(50% - 8px);
+    min-width: 0;
   }
 }

@@ -119,7 +119,7 @@ export default function Cart() {
           </Box>
 
           {/* Controls */}
-          <Box padding={2}>
+          <Box className="Cart-Footer" padding={2}>
             <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
               <Typography style={{ color: '#333' }} variant="body1" fontWeight="bold">
                 Total
@@ -128,7 +128,7 @@ export default function Cart() {
                 {formatCurrency(calculateTotal())}
               </Typography>
             </Box>
-            <Box display="flex" flexDirection="column" gap={2}>
+            <Box className="Cart-Actions" display="flex" flexDirection="column" gap={2}>
               <Link className="Cart-Proceed-Button" to="/checkout">
                 Proceed to Checkout
               </Link>

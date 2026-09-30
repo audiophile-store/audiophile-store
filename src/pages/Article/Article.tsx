@@ -106,63 +106,69 @@ export default function Article() {
               {product.title}
             </Typography>
           </Box>
-          <Typography variant="body1">{product.generalInfo}</Typography>
-          <Box className="Article-Additional-Info-Container">
-            <Box className="Article-Id-Container">
-              <Typography className="Article-Id" style={{ fontSize: '14px' }} variant="body1">
-                ID {product.id}
-              </Typography>
-            </Box>
-          </Box>
-          <Box className="Article-Price">
-            <Typography variant="h4">{formatCurrency(product.price)}</Typography>
-          </Box>
-          <Box className="Article-Controls">
-            <Box className="Article-Controls-Form">
-              <Box className="Article-In-Additional-Info-Container">
-                {availableStock === 0 ? (
-                  <Typography variant="inherit" className="Available-Quantity">
-                    Out of stock. We'll restock soon.
-                  </Typography>
-                ) : (
-                  <Typography variant="inherit" className="Available-Quantity">
-                    Available stock quantity: <span>{availableStock}</span>
-                  </Typography>
-                )}
 
-                <Box className="Article-Benefits-Container">
-                  <Typography className="Article-Benefits" variant="inherit">
-                    <CheckCircleOutlineIcon />
-                    2-Year Warranty
-                  </Typography>
-                  <Typography className="Article-Benefits" variant="inherit">
-                    <CheckCircleOutlineIcon />
-                    Fast shipping
-                  </Typography>
-                  <Typography className="Article-Benefits" variant="inherit">
-                    <PaidOutlinedIcon />
-                    Secure payment
-                  </Typography>
+          <Box className="Article-Buy-Box">
+            <Box className="Article-Price">
+              <Typography variant="h4">{formatCurrency(product.price)}</Typography>
+            </Box>
+            <Box className="Article-Controls">
+              <Box className="Article-Controls-Form">
+                <Box className="Article-In-Additional-Info-Container">
+                  {availableStock === 0 ? (
+                    <Typography variant="inherit" className="Available-Quantity">
+                      Out of stock. We'll restock soon.
+                    </Typography>
+                  ) : (
+                    <Typography variant="inherit" className="Available-Quantity">
+                      Available stock quantity: <span>{availableStock}</span>
+                    </Typography>
+                  )}
+
+                  <Box className="Article-Benefits-Container">
+                    <Typography className="Article-Benefits" variant="inherit">
+                      <CheckCircleOutlineIcon />
+                      2-Year Warranty
+                    </Typography>
+                    <Typography className="Article-Benefits" variant="inherit">
+                      <CheckCircleOutlineIcon />
+                      Fast shipping
+                    </Typography>
+                    <Typography className="Article-Benefits" variant="inherit">
+                      <PaidOutlinedIcon />
+                      Secure payment
+                    </Typography>
+                  </Box>
+                </Box>
+                <Box className="Article-Quantity-Input-Container">
+                  <QuantityInput
+                    quantity={quantity}
+                    increaseHandler={increaseProductHandler}
+                    decreaseHandler={decreaseProductHandler}
+                    increaseDisabled={increaseDisabled}
+                    decreaseDisabled={quantity === 1}
+                  />
                 </Box>
               </Box>
-              <Box className="Article-Quantity-Input-Container">
-                <QuantityInput
-                  quantity={quantity}
-                  increaseHandler={increaseProductHandler}
-                  decreaseHandler={decreaseProductHandler}
-                  increaseDisabled={increaseDisabled}
-                  decreaseDisabled={quantity === 1}
-                />
+              <Button
+                disabled={addToCartDisabled}
+                onClick={addToCartHandler}
+                className="Add-Article"
+                variant="contained"
+              >
+                ADD TO CART
+              </Button>
+            </Box>
+          </Box>
+
+          <Box className="Article-Details">
+            <Typography variant="body1">{product.generalInfo}</Typography>
+            <Box className="Article-Additional-Info-Container">
+              <Box className="Article-Id-Container">
+                <Typography className="Article-Id" style={{ fontSize: '14px' }} variant="body1">
+                  ID {product.id}
+                </Typography>
               </Box>
             </Box>
-            <Button
-              disabled={addToCartDisabled}
-              onClick={addToCartHandler}
-              className="Add-Article"
-              variant="contained"
-            >
-              ADD TO CART
-            </Button>
           </Box>
         </Box>
       </Box>
