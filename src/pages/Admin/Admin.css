@@ -149,7 +149,9 @@
 
 .Admin-EditBtn {
   color: #555 !important;
-  transition: color 0.2s ease, background-color 0.2s ease !important;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease !important;
 }
 
 .Admin-EditBtn:hover {
@@ -159,7 +161,9 @@
 
 .Admin-DeleteBtn {
   color: #999 !important;
-  transition: color 0.2s ease, background-color 0.2s ease !important;
+  transition:
+    color 0.2s ease,
+    background-color 0.2s ease !important;
 }
 
 .Admin-DeleteBtn:hover {

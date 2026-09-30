@@ -15,7 +15,7 @@ export const pages = [
     title: 'Earphones',
     url: '/earphones',
   },
-]
+];
 
 export const VAT_RATE = 0.2;
 

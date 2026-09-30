@@ -1,4 +1,3 @@
-
 .Promoted {
   padding: 0;
   align-items: center;
@@ -35,9 +34,9 @@
   text-align: center;
 }
 
-.Promoted-Info > .New-Product{
+.Promoted-Info > .New-Product {
   color: #ffffff;
-  font-family: "Manrope-Regular", Helvetica;
+  font-family: 'Manrope-Regular', Helvetica;
   font-size: 12px;
   font-weight: 400;
   letter-spacing: 10px;
@@ -47,7 +46,7 @@
 
 .Promoted-Info-Text h4 {
   color: #ffffff;
-  font-family: "Manrope-Bold", Helvetica;
+  font-family: 'Manrope-Bold', Helvetica;
   font-size: 40px;
   font-weight: 700;
   letter-spacing: 2px;
@@ -59,7 +58,7 @@
 
 .Promoted-Info-Text p {
   color: #ffffff;
-  font-family: "Manrope-Medium", Helvetica;
+  font-family: 'Manrope-Medium', Helvetica;
   font-size: 13px;
   font-weight: 500;
   letter-spacing: 0;
@@ -70,8 +69,8 @@
 
 .Promoted-Info button {
   background-color: transparent;
-  border: 1px solid #D87D4A;
-  color: #D87D4A;
+  border: 1px solid #d87d4a;
+  color: #d87d4a;
   padding: 10px 20px;
   border-radius: 4px;
   cursor: pointer;
@@ -86,7 +85,7 @@
 }
 
 .Promoted-Info button:hover {
-  background-color: #D87D4A;
+  background-color: #d87d4a;
   color: black;
   /* border-color: black; */
 }
@@ -132,15 +131,15 @@
     text-align: left;
     margin: unset;
   }
- .Home-Header-Image-Container {
-   position: relative;
-   z-index: 0;
-   right: -80px;
-   bottom: 60px;
-   order:unset;
-   background-position-x: right;
-   background-position-y: center;
-   height: 800px;
+  .Home-Header-Image-Container {
+    position: relative;
+    z-index: 0;
+    right: -80px;
+    bottom: 60px;
+    order: unset;
+    background-position-x: right;
+    background-position-y: center;
+    height: 800px;
   }
   .Promoted-Info button {
     width: 70%;
@@ -148,7 +147,7 @@
   .Promoted-Info-Text p {
     width: 349px;
     text-align: start;
-}
+  }
 }
 
 @media screen and (min-width: 1536px) {
@@ -204,7 +203,7 @@
   .Home-Header-Image-Container {
     height: 250px;
   }
-    .Promoted-Info-Text h4 {
+  .Promoted-Info-Text h4 {
     font-size: 30px;
     line-height: 26px;
     margin: 12px 0;

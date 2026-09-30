@@ -1,5 +1,21 @@
 import React, { useEffect, useMemo, useRef, useState } from 'react';
-import { Grid, Box, Typography, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Button, Card, CardContent, Divider, Dialog, DialogContent } from '@mui/material';
+import {
+  Grid,
+  Box,
+  Typography,
+  TextField,
+  FormControl,
+  FormLabel,
+  RadioGroup,
+  FormControlLabel,
+  Radio,
+  Button,
+  Card,
+  CardContent,
+  Divider,
+  Dialog,
+  DialogContent,
+} from '@mui/material';
 import './Checkout.css';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { useNavigate } from 'react-router-dom';
@@ -32,7 +48,10 @@ const Checkout = () => {
   const [orderId, setOrderId] = useState<string | null>(null);
   const [buttonAnimate, setButtonAnimate] = useState(false);
 
-  const price = cartItems.reduce((acc: number, item: CartItem) => acc + item.price * item.quantity, 0);
+  const price = cartItems.reduce(
+    (acc: number, item: CartItem) => acc + item.price * item.quantity,
+    0
+  );
   const vatAmount = price - price / (1 + VAT_RATE);
   const netPrice = price - vatAmount;
   const totalPrice = price + SHIPPING_COST;
@@ -253,8 +272,9 @@ const Checkout = () => {
             ) : (
               <Box mt={2}>
                 <Typography className="Cash-On-Delivery-Info">
-                  The 'Cash on Delivery' option enables you to pay in cash when our delivery courier arrives at your residence.
-                  Just make sure your address is correct so that your order will not be cancelled.
+                  The 'Cash on Delivery' option enables you to pay in cash when our delivery courier
+                  arrives at your residence. Just make sure your address is correct so that your
+                  order will not be cancelled.
                 </Typography>
               </Box>
             )}
@@ -271,28 +291,28 @@ const Checkout = () => {
 
               {/* Example Products */}
               <Box>
-                { cartItems?.map((item: CartItem) => {
+                {cartItems?.map((item: CartItem) => {
                   return (
                     <Box key={item.id} display="flex" justifyContent="space-between" mb={2}>
-                      <Typography>{ item.title }</Typography>
-                      <Typography>{ formatCurrency(item.price * item.quantity) }</Typography>
+                      <Typography>{item.title}</Typography>
+                      <Typography>{formatCurrency(item.price * item.quantity)}</Typography>
                     </Box>
-                  )
+                  );
                 })}
               </Box>
               <Divider sx={{ my: 2 }} />
               {/* Total */}
               <Box display="flex" justifyContent="space-between" mb={1}>
                 <Typography variant="body2">Subtotal (excl. VAT)</Typography>
-                <Typography variant="body2">{ formattedNetPrice }</Typography>
+                <Typography variant="body2">{formattedNetPrice}</Typography>
               </Box>
               <Box display="flex" justifyContent="space-between" mb={1}>
                 <Typography variant="body2">VAT (20%)</Typography>
-                <Typography variant="body2">{ formattedVAT }</Typography>
+                <Typography variant="body2">{formattedVAT}</Typography>
               </Box>
               <Box display="flex" justifyContent="space-between" mb={1}>
                 <Typography variant="body2">Shipping</Typography>
-                <Typography variant="body2">{ formattedShipping }</Typography>
+                <Typography variant="body2">{formattedShipping}</Typography>
               </Box>
 
               <Divider sx={{ my: 2 }} />
@@ -303,7 +323,7 @@ const Checkout = () => {
                   Grand Total
                 </Typography>
                 <Typography variant="subtitle1" fontWeight="bold">
-                  { formattedTotal }
+                  {formattedTotal}
                 </Typography>
               </Box>
 

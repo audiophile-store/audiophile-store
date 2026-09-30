@@ -2,8 +2,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import './index.css';
 import App from './App';
-import { Provider } from 'react-redux'
-import store from './app/store'
+import { Provider } from 'react-redux';
+import store from './app/store';
 import { ThemeProvider } from '@mui/material/styles';
 import { muiColorTheme } from './utils/mui';
 import { BrowserRouter } from 'react-router-dom';
@@ -18,11 +18,11 @@ if (!container) {
 const root = ReactDOM.createRoot(container);
 root.render(
   <React.StrictMode>
-    <Provider store={ store }>
-      <ThemeProvider theme={ muiColorTheme }>
+    <Provider store={store}>
+      <ThemeProvider theme={muiColorTheme}>
         <BrowserRouter>
           <ScrollToTop>
-            <SnackbarProvider autoHideDuration={ 2000 }>
+            <SnackbarProvider autoHideDuration={2000}>
               <App />
             </SnackbarProvider>
           </ScrollToTop>

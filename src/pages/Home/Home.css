@@ -11,7 +11,7 @@
   margin-bottom: 140px;
 }
 
-.Categories-Tabs button{
+.Categories-Tabs button {
   font-size: 14px;
 }
 
@@ -24,8 +24,8 @@
   .Home-Main-Content {
     padding: 0 100px;
   }
- .Home-Header {
-    margin-bottom: 0px
+  .Home-Header {
+    margin-bottom: 0px;
   }
 }
 
@@ -33,8 +33,8 @@
   .Home-Main-Content {
     padding: 0 100px;
   }
- .Home-Header {
-    margin-bottom: 60px
+  .Home-Header {
+    margin-bottom: 60px;
   }
   .Commercial-Info > h4 {
     margin: 0 0 40px 0;
@@ -73,13 +73,13 @@
 
     background-position: top;
     order: 1;
-    background-position-x:center;
+    background-position-x: center;
     background-position-y: center;
   }
 }
 
 @media screen and (min-width: 1536px) {
-   .Home-Main-Content {
+  .Home-Main-Content {
     padding: 0 200px 0 200px;
   }
   .Commercial-Image {
@@ -91,7 +91,7 @@
 }
 
 @media (max-width: 900px) and (orientation: landscape) {
-.Home-Main-Content {
+  .Home-Main-Content {
     padding: 0 20px;
   }
 }

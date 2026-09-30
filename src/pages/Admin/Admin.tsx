@@ -158,10 +158,18 @@ export default function Admin() {
                 </TableCell>
                 <TableCell align="right">
                   <Box className="Admin-Actions">
-                    <IconButton size="small" className="Admin-EditBtn" onClick={() => handleEdit(product)}>
+                    <IconButton
+                      size="small"
+                      className="Admin-EditBtn"
+                      onClick={() => handleEdit(product)}
+                    >
                       <EditOutlinedIcon fontSize="small" />
                     </IconButton>
-                    <IconButton size="small" className="Admin-DeleteBtn" onClick={() => handleDeleteClick(product)}>
+                    <IconButton
+                      size="small"
+                      className="Admin-DeleteBtn"
+                      onClick={() => handleDeleteClick(product)}
+                    >
                       <DeleteOutlineIcon fontSize="small" />
                     </IconButton>
                   </Box>
@@ -179,30 +187,29 @@ export default function Admin() {
         </Table>
       </TableContainer>
 
-      <ProductFormModal
-        open={modalOpen}
-        onClose={handleCloseModal}
-        product={editProduct}
-      />
+      <ProductFormModal open={modalOpen} onClose={handleCloseModal} product={editProduct} />
 
       <Dialog
         open={Boolean(deleteProduct)}
         onClose={handleDeleteCancel}
         PaperProps={{ className: 'Admin-DeleteDialog' }}
       >
-        <DialogTitle className="Admin-DeleteDialog-Title">
-          Delete Product
-        </DialogTitle>
+        <DialogTitle className="Admin-DeleteDialog-Title">Delete Product</DialogTitle>
         <DialogContent>
           <Typography variant="body2">
-            Are you sure you want to delete <strong>{deleteProduct?.shortName}</strong>? This action cannot be undone.
+            Are you sure you want to delete <strong>{deleteProduct?.shortName}</strong>? This action
+            cannot be undone.
           </Typography>
         </DialogContent>
         <DialogActions className="Admin-DeleteDialog-Actions">
           <Button onClick={handleDeleteCancel} className="Admin-DeleteDialog-CancelBtn">
             Cancel
           </Button>
-          <Button onClick={handleDeleteConfirm} variant="contained" className="Admin-DeleteDialog-ConfirmBtn">
+          <Button
+            onClick={handleDeleteConfirm}
+            variant="contained"
+            className="Admin-DeleteDialog-ConfirmBtn"
+          >
             Delete
           </Button>
         </DialogActions>

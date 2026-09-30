@@ -7,25 +7,25 @@
   gap: 10px;
 }
 
- .Article-Top {
-   box-sizing: border-box;
-   width: 100%;
-   display: flex;
-   flex-direction: column;
-   gap: 60px;
- }
+.Article-Top {
+  box-sizing: border-box;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  gap: 60px;
+}
 
 .Article-Gallery {
   padding: 0 !important;
   border-top: 3px solid #d87d4a;
-} 
+}
 
 .Article-Title {
   width: 100%;
   position: relative;
 }
 
-.Article-Title > h4{
+.Article-Title > h4 {
   font-weight: bold;
   width: 100%;
   font-size: 27px;
@@ -43,15 +43,14 @@
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
   /* box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px; */
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
-  
+
   display: flex;
   flex-direction: column;
   gap: 20px;
-
 }
 .Article-Description > p {
   color: #000000;
-  font-family: "Manrope-Medium", Helvetica;
+  font-family: 'Manrope-Medium', Helvetica;
   opacity: 0.5;
   text-align: left;
   font-size: 15px;
@@ -69,7 +68,7 @@
 }
 
 .Article-Price {
-  border: 1px solid #D87D4A;
+  border: 1px solid #d87d4a;
   color: #d87d4a;
   margin-top: 20px;
   border-radius: 4px;
@@ -85,7 +84,7 @@
 .Article-Title > .New-Product-Flag {
   position: absolute;
   color: #d87d4a;
-  font-family: "Manrope-Regular", Helvetica;
+  font-family: 'Manrope-Regular', Helvetica;
   font-weight: 400;
   letter-spacing: 6px;
   line-height: normal;
@@ -168,7 +167,7 @@
 }
 .Article-Id {
   color: #000000;
-  font-family: "Manrope-Medium", Helvetica;
+  font-family: 'Manrope-Medium', Helvetica;
   opacity: 0.5;
   text-align: left;
   width: 100%;
@@ -205,24 +204,24 @@
   }
   .Article-Description {
     width: 100%;
-   }
-   .Article-Additional-Info-Container {
+  }
+  .Article-Additional-Info-Container {
     flex-direction: column;
     justify-content: flex-start;
     gap: 20px;
-   }
+  }
   .Article-Controls-Form {
     flex-direction: row;
     justify-content: space-between;
     align-items: flex-start;
     width: 100%;
   }
-  
+
   .Article-Benefits-Container {
     flex-direction: row;
     gap: 20px;
   }
-  
+
   .Article-Controls {
     align-items: start;
   }
@@ -247,7 +246,7 @@
   .Article-Controls {
     align-items: flex-end;
   }
-  .Article-Controls > button  {
+  .Article-Controls > button {
     width: 40%;
   }
 }
@@ -269,12 +268,12 @@
 
 @media (max-width: 800px) and (orientation: landscape) {
   .Article {
-   padding: 30px;
+    padding: 30px;
   }
   .Article-Description {
     padding: 40px 10px;
   }
-   .Article-Top {
+  .Article-Top {
     gap: 20px;
     flex-direction: column;
   }

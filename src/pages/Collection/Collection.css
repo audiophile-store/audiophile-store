@@ -6,31 +6,31 @@
 }
 
 @media screen and (min-width: 600px) {
- .Collection {
+  .Collection {
     padding: 30px 100px;
   }
 }
 
 @media screen and (min-width: 900px) {
- .Collection {
+  .Collection {
     padding: 30px 100px;
   }
 }
 
 @media screen and (min-width: 1200px) {
- .Collection {
+  .Collection {
     padding: 30px 120px;
     /* margin-bottom: 80px; */
   }
 }
 
 @media screen and (min-width: 1536px) {
- .Collection {
+  .Collection {
     padding: 30px 200px;
   }
-   .collection-grid-item {
+  .collection-grid-item {
     padding-left: 0 !important;
-   }
+  }
 }
 
 @media (max-width: 896px) and (orientation: landscape) {
@@ -40,7 +40,7 @@
   }
 }
 
-@media  (max-width: 667px) and (orientation: landscape) {
+@media (max-width: 667px) and (orientation: landscape) {
   .Collection {
     padding: 30px 50px 0 50px;
   }

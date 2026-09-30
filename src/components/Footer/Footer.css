@@ -19,9 +19,10 @@
   padding-top: 0 !important;
 }
 
-.Footer-Description, .Footer-Copyright {
+.Footer-Description,
+.Footer-Copyright {
   color: #ffffff;
-  font-family: "Manrope-Medium";
+  font-family: 'Manrope-Medium';
   font-size: 13px !important;
   font-weight: 500;
   letter-spacing: 0;
@@ -29,10 +30,9 @@
   text-align: center;
 }
 
-
 .Footer-Copy-Right p:nth-child(1) {
- color: #ffffff;
-  font-family: "Manrope-Bold", Helvetica;
+  color: #ffffff;
+  font-family: 'Manrope-Bold', Helvetica;
   /* font-size: 15px; */
   font-weight: 700;
   letter-spacing: 0;
@@ -58,10 +58,11 @@
     padding: 40px;
     gap: 40px;
   }
-  .Footer-Description, .Footer-Copyright {
+  .Footer-Description,
+  .Footer-Copyright {
     text-align: left;
   }
-  .Footer-Description{
+  .Footer-Description {
     width: 340px;
   }
   .Social-Icons {
@@ -77,19 +78,19 @@
 }
 
 @media screen and (min-width: 1200px) {
- .Footer {
+  .Footer {
     padding: 65px 100px 48px 100px;
   }
-  .Footer-Description{
+  .Footer-Description {
     width: 500px;
   }
 }
 
 @media screen and (min-width: 1536px) {
- .Footer {
-  padding: 40px 200px 40px 200px;
-}
-  .Footer-Description{
+  .Footer {
+    padding: 40px 200px 40px 200px;
+  }
+  .Footer-Description {
     width: unset;
   }
 }

@@ -8,9 +8,7 @@ const ScrollToTop = ({ children }: { children: ReactNode }) => {
     window.scrollTo(0, 0);
   }, [pathname]);
 
-  return (
-    <>{ children }</>
-  );
+  return <>{children}</>;
 };
 
 export default ScrollToTop;

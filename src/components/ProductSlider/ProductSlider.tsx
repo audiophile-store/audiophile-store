@@ -11,16 +11,16 @@ import type { Product } from '../../types/product';
 
 export default function ProductSlider({ products }: { products: Product[] }) {
   return (
-    <div className='Product-Slider-Container'>
+    <div className="Product-Slider-Container">
       <Swiper
         // loop={ true}
-        pagination={ {
+        pagination={{
           type: 'progressbar',
-        } }
-        modules={ [Pagination] }
-        spaceBetween={ 30 }
-        slidesPerView={ 3 }
-        breakpoints={ {
+        }}
+        modules={[Pagination]}
+        spaceBetween={30}
+        slidesPerView={3}
+        breakpoints={{
           1600: {
             slidesPerView: 5,
           },
@@ -36,23 +36,29 @@ export default function ProductSlider({ products }: { products: Product[] }) {
           0: {
             slidesPerView: 1,
           },
-        } }
+        }}
         className="Product-Slider-Swiper"
       >
-        { products.map((item: Product) => {
+        {products.map((item: Product) => {
           const image = getProductImage(item.images.main);
           return (
-            <SwiperSlide key={ item.id } className='Product-Slider-Slide'>
-              <Link to={ `/article/${item.id}` } className="Product-Slider-Link">
-                <Box className="Product-Slider-Image" style={ { backgroundImage: `url(${image})` } }>
-                </Box>
-                <Box className='Product-Slider-Info-Container'>
-                  <Typography variant='p' className="Product-Slider-Info">{ item.title }</Typography>
-                  <Typography variant='p' className="Product-Slider-Info">{ formatCurrency(item.price) }</Typography>
+            <SwiperSlide key={item.id} className="Product-Slider-Slide">
+              <Link to={`/article/${item.id}`} className="Product-Slider-Link">
+                <Box
+                  className="Product-Slider-Image"
+                  style={{ backgroundImage: `url(${image})` }}
+                ></Box>
+                <Box className="Product-Slider-Info-Container">
+                  <Typography variant="p" className="Product-Slider-Info">
+                    {item.title}
+                  </Typography>
+                  <Typography variant="p" className="Product-Slider-Info">
+                    {formatCurrency(item.price)}
+                  </Typography>
                 </Box>
               </Link>
             </SwiperSlide>
-          )
+          );
         })}
       </Swiper>
     </div>

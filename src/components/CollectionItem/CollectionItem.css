@@ -1,5 +1,3 @@
-
-
 .Collection-Item {
   width: 100%;
   display: flex;
@@ -8,7 +6,7 @@
   /* box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px; */
 
   box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
-/* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
+  /* box-shadow: rgba(99, 99, 99, 0.2) 0px 2px 8px 0px; */
   cursor: pointer;
   text-decoration: none;
   overflow: hidden;
@@ -33,7 +31,6 @@
   transform: scale(1.01) translateY(0px) translateZ(0);
   /* box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px; */
   box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
-
 }
 
 .Collection-Item:hover .Collection-Item-Thumbnail {
@@ -43,7 +40,7 @@
 .Collection-Item-New-Product {
   position: absolute;
   color: #d87d4a;
-  font-family: "Manrope-Regular", Helvetica;
+  font-family: 'Manrope-Regular', Helvetica;
   font-weight: 400;
   letter-spacing: 6px;
   line-height: normal;
@@ -76,11 +73,11 @@
 
 .Collection-Item-Information > p {
   color: #000000;
-  font-family: "Manrope-Medium", Helvetica;
+  font-family: 'Manrope-Medium', Helvetica;
   opacity: 0.7;
   display: -webkit-box;
   line-clamp: 3;
-  -webkit-line-clamp:3;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -95,7 +92,7 @@
 .Collection-Item-Information button {
   background-color: #d87d4a;
   color: #ffffff;
-  font-family: "Manrope-Bold", Helvetica;
+  font-family: 'Manrope-Bold', Helvetica;
   font-weight: 700;
   letter-spacing: 1px;
   line-height: normal;
@@ -108,7 +105,7 @@
 }
 
 .Collection-Item-Information button:hover {
-  background-color: #FBAF85;
+  background-color: #fbaf85;
 }
 
 .Collection-Item-Information button:disabled {
@@ -120,15 +117,14 @@
   font-size: 15px;
   font-weight: 500;
   color: #000000;
-  font-weight:6500;
+  font-weight: 6500;
   text-align: left;
   margin-top: 10px;
-  font-family: "Manrope-Bold", Helvetica;
+  font-family: 'Manrope-Bold', Helvetica;
   line-height: 20px;
   opacity: 1;
   font-size: 16px;
 }
-
 
 .Collection-Item-Information > .Collection-Item-Price > span {
   color: #d87d4a;
@@ -182,9 +178,8 @@
   .Collection-Item {
     gap: 30px;
     flex-direction: row;
-
   }
-  
+
   .Collection-Item-Thumbnail {
     max-width: 240px;
     min-width: 240px;
@@ -202,12 +197,12 @@
   .Collection-Item-Information > p {
     height: 60px;
     line-clamp: 3;
-    -webkit-line-clamp:3;
+    -webkit-line-clamp: 3;
     font-size: 14px;
     text-align: left;
     height: 40px;
     line-clamp: 2;
-    -webkit-line-clamp:2;
+    -webkit-line-clamp: 2;
     margin: unset;
   }
   .Collection-Item-Information button {
@@ -217,19 +212,19 @@
     align-self: flex-start;
     box-sizing: border-box;
   }
-    .Collection-Item-New-Product {
+  .Collection-Item-New-Product {
     position: absolute;
     font-size: 10px;
     top: 24px;
     left: unset;
-    transform: translate(0, -0);;
+    transform: translate(0, -0);
     width: unset;
   }
 }
 
 @media screen and (min-width: 1200px) {
   .Collection-Item-Thumbnail {
-   max-width: 270px;
+    max-width: 270px;
     min-width: 270px;
     height: 250px;
     padding: 0;
@@ -251,7 +246,7 @@
     font-size: 14px;
     text-align: left;
     line-clamp: 3;
-    -webkit-line-clamp:3;
+    -webkit-line-clamp: 3;
     height: 60px;
   }
   .Collection-Item-New-Product {
@@ -261,7 +256,7 @@
   }
 }
 
-@media  (max-width: 667px) and (orientation: landscape) {
+@media (max-width: 667px) and (orientation: landscape) {
   .Collection-Item {
     flex-direction: row;
   }
@@ -279,11 +274,11 @@
   }
   .Collection-Item-Information > p {
     color: #000000;
-    font-family: "Manrope-Medium", Helvetica;
+    font-family: 'Manrope-Medium', Helvetica;
     opacity: 0.5;
     display: -webkit-box;
     line-clamp: 3;
-    -webkit-line-clamp:3;
+    -webkit-line-clamp: 3;
     -webkit-box-orient: vertical;
     overflow: hidden;
     text-overflow: ellipsis;
@@ -295,7 +290,7 @@
     padding: 0;
     margin: 0;
   }
-  .Collection-Item-Information button{
+  .Collection-Item-Information button {
     font-size: 10px;
     padding: 10px 0;
     width: 60%;
@@ -306,20 +301,19 @@
   }
 }
 
-
-
 @media (min-width: 668px) and (max-width: 896px) and (orientation: landscape) {
   .Collection-Item {
     flex-direction: row;
   }
   .Collection-Item-Thumbnail {
     max-width: 210px;
-    height: 210px
+    height: 210px;
   }
   .Collection-Item-Information {
     height: 210px;
   }
-  .Collection-Item-Information > p, .Collection-Item-Information > h4 {
+  .Collection-Item-Information > p,
+  .Collection-Item-Information > h4 {
     text-align: start;
     margin-left: 0;
   }

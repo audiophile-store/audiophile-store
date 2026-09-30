@@ -78,7 +78,11 @@ export default function ProductFormModal({ open, onClose, product }: ProductForm
         newProduct: product.newProduct || false,
         popularProduct: product.popularProduct || false,
         images: product.images
-          ? { cover: product.images.cover || '', main: product.images.main || '', gallery: product.images.gallery ? [...product.images.gallery] : [] }
+          ? {
+              cover: product.images.cover || '',
+              main: product.images.main || '',
+              gallery: product.images.gallery ? [...product.images.gallery] : [],
+            }
           : { cover: '', main: '', gallery: [] },
         features: product.features?.length ? [...product.features] : ['', ''],
         inBox: product.inBox?.length
@@ -121,17 +125,18 @@ export default function ProductFormModal({ open, onClose, product }: ProductForm
     return getProductImage(path) || null;
   };
 
-  const handleInBoxChange = (index: number, field: keyof InBoxItem) => (e: ChangeEvent<HTMLInputElement>) => {
-    setForm((prev) => {
-      const inBox = prev.inBox.map((item: InBoxItem) => ({ ...item }));
-      if (field === 'quantity') {
-        inBox[index].quantity = Number(e.target.value);
-      } else {
-        inBox[index].name = e.target.value;
-      }
-      return { ...prev, inBox };
-    });
-  };
+  const handleInBoxChange =
+    (index: number, field: keyof InBoxItem) => (e: ChangeEvent<HTMLInputElement>) => {
+      setForm((prev) => {
+        const inBox = prev.inBox.map((item: InBoxItem) => ({ ...item }));
+        if (field === 'quantity') {
+          inBox[index].quantity = Number(e.target.value);
+        } else {
+          inBox[index].name = e.target.value;
+        }
+        return { ...prev, inBox };
+      });
+    };
 
   const addInBoxItem = () => {
     setForm((prev) => ({
@@ -223,9 +228,7 @@ export default function ProductFormModal({ open, onClose, product }: ProductForm
           </Box>
           <Box className="ProductFormModal-Row">
             <FormControlLabel
-              control={
-                <Switch checked={form.newProduct} onChange={handleToggle('newProduct')} />
-              }
+              control={<Switch checked={form.newProduct} onChange={handleToggle('newProduct')} />}
               label="New Product"
             />
             <FormControlLabel
@@ -310,7 +313,7 @@ export default function ProductFormModal({ open, onClose, product }: ProductForm
             Add Item
           </Button>
         </Box>
-                <Box className="ProductFormModal-Section">
+        <Box className="ProductFormModal-Section">
           <Typography variant="subtitle2" className="ProductFormModal-SectionTitle">
             Images
           </Typography>
@@ -323,12 +326,18 @@ export default function ProductFormModal({ open, onClose, product }: ProductForm
                     {src ? (
                       <>
                         <img src={src} alt={`Product ${index + 1}`} />
-                        <Box className="ProductFormModal-ThumbOverlay" onClick={() => removeGalleryImage(index)}>
+                        <Box
+                          className="ProductFormModal-ThumbOverlay"
+                          onClick={() => removeGalleryImage(index)}
+                        >
                           <CloseIcon fontSize="small" />
                         </Box>
                       </>
                     ) : (
-                      <Box className="ProductFormModal-ThumbBroken" onClick={() => removeGalleryImage(index)}>
+                      <Box
+                        className="ProductFormModal-ThumbBroken"
+                        onClick={() => removeGalleryImage(index)}
+                      >
                         <CloseIcon fontSize="small" className="ProductFormModal-ThumbBrokenX" />
                       </Box>
                     )}

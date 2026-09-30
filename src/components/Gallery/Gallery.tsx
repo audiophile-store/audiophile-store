@@ -1,10 +1,10 @@
-import React from "react";
-import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Thumbs } from "swiper/modules";
-import "swiper/css";
-import "swiper/css/navigation";
-import "swiper/css/thumbs";
-import "./Gallery.css";
+import React from 'react';
+import { Swiper, SwiperSlide } from 'swiper/react';
+import { Navigation, Thumbs } from 'swiper/modules';
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/thumbs';
+import './Gallery.css';
 
 import { Pagination } from 'swiper/modules';
 import { getProductImage } from '../../utils/images';
@@ -19,23 +19,20 @@ const Gallery = ({ images }: GalleryProps) => {
   return (
     <div className="product-gallery">
       <Swiper
-        pagination={ {
+        pagination={{
           type: 'bullets',
-        } }
-        spaceBetween={ 10 }
-        navigation={ true }
-        thumbs={ { swiper: thumbsSwiper } }
-        modules={ [Navigation, Thumbs, Pagination] }
+        }}
+        spaceBetween={10}
+        navigation={true}
+        thumbs={{ swiper: thumbsSwiper }}
+        modules={[Navigation, Thumbs, Pagination]}
         className="main-slider"
       >
-        { images.map((image: string, index: number) => (
-          <SwiperSlide key={ index }>
-            <img
-              src={ getProductImage(image) }
-              alt='Test alt'
-            />
+        {images.map((image: string, index: number) => (
+          <SwiperSlide key={index}>
+            <img src={getProductImage(image)} alt="Test alt" />
           </SwiperSlide>
-        )) }
+        ))}
       </Swiper>
 
       {/* <Swiper

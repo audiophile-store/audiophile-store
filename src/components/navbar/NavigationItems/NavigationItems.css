@@ -19,13 +19,14 @@
   color: #d87d4a;
 }
 
-.MenuNavBar > .active,.active {
+.MenuNavBar > .active,
+.active {
   color: #d87d4a;
 }
 
 .MenuNavBar {
   text-decoration: none;
-  color:black;
+  color: black;
   text-transform: uppercase;
   font-family: 'Manrope', sans-serif;
   font-weight: bold;
@@ -41,6 +42,6 @@
   font-weight: 500;
   text-transform: capitalize;
 }
-.MenuNavBar > a:hover{
+.MenuNavBar > a:hover {
   color: #d87d4a;
 }

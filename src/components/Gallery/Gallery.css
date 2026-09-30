@@ -57,7 +57,7 @@
 }
 
 .product-gallery .swiper-pagination-progressbar-fill {
-  background-color: #D87D4A;
+  background-color: #d87d4a;
 }
 
 /* Navigation arrows styling */
@@ -100,7 +100,6 @@
   }
 }
 
-
 /* Mobilni telefoni u landscape modu */
 @media (max-width: 900px) and (orientation: landscape) {
   .product-gallery .main-slider {
@@ -109,7 +108,7 @@
     /* max-height: 200px; */
     height: 350px;
   }
-  
+
   .product-gallery .thumbs-slider {
     margin-top: 5px;
   }

@@ -9,15 +9,19 @@ A demo e-commerce storefront for audio equipment, built with React, TypeScript a
 ## Screenshots
 
 ### Home
+
 ![Home page](docs/screenshots/home.png)
 
 ### Product page
+
 ![Product page](docs/screenshots/product.png)
 
 ### Cart
+
 ![Shopping cart](docs/screenshots/cart.png)
 
 ### Checkout
+
 ![Checkout page](docs/screenshots/checkout.png)
 
 ---
@@ -33,16 +37,17 @@ A demo e-commerce storefront for audio equipment, built with React, TypeScript a
 
 ## Tech stack
 
-| Area | Choice |
-| --- | --- |
-| Language | TypeScript 5 (strict mode) |
-| UI | React 18, Material UI 5 |
-| State | Redux Toolkit, React Redux |
-| Routing | React Router 6 |
-| Carousel | Swiper 11 |
-| Notifications | notistack |
-| Build | Vite 5 |
-| Hosting | Vercel |
+| Area          | Choice                     |
+| ------------- | -------------------------- |
+| Language      | TypeScript 5 (strict mode) |
+| UI            | React 18, Material UI 5    |
+| State         | Redux Toolkit, React Redux |
+| Routing       | React Router 6             |
+| Carousel      | Swiper 11                  |
+| Notifications | notistack                  |
+| Build         | Vite 5                     |
+| Hosting       | Vercel                     |
+| Tooling       | ESLint, Prettier           |
 
 ## Running locally
 
@@ -55,6 +60,15 @@ npm run dev
 
 The app runs at `http://localhost:5173`. `npm run build` type-checks the project and writes a
 production bundle to `dist/`, and `npm run preview` serves that bundle locally.
+
+| Script                 | What it does                            |
+| ---------------------- | --------------------------------------- |
+| `npm run dev`          | Start the Vite dev server               |
+| `npm run build`        | Type-check and build for production     |
+| `npm run preview`      | Serve the production build              |
+| `npm run lint`         | Run ESLint (warnings fail the run)      |
+| `npm run format`       | Format the project with Prettier        |
+| `npm run format:check` | Verify formatting without writing files |
 
 ## Project structure
 

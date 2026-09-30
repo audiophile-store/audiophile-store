@@ -4,7 +4,7 @@ import Layout from './components/Layout/Layout';
 
 function App() {
   return (
-    <Box className='App'>
+    <Box className="App">
       <Layout />
     </Box>
   );

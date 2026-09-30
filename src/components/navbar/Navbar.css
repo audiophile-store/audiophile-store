@@ -14,7 +14,7 @@
 }
 
 .Product-Header > h3 {
-  color: #FFF;
+  color: #fff;
   text-align: center;
   font-family: Manrope;
   font-size: 36px;
@@ -72,7 +72,8 @@
   font-size: 10px;
   border-radius: 50%;
   position: absolute;
-  top: -5px; left: 3px;
+  top: -5px;
+  left: 3px;
   z-index: 4;
   font-weight: bold;
 }
@@ -83,31 +84,41 @@
 }
 
 @keyframes bounce {
-  30% { transform: scale(1.2); }
-  40%, 60% { transform: rotate(-5deg) scale(1.1); }
-  50% { transform: rotate(5deg) scale(1.1); }
-  70% { transform: rotate(0deg) scale(1.1); }
-  100% { transform: scale(1); }
+  30% {
+    transform: scale(1.2);
+  }
+  40%,
+  60% {
+    transform: rotate(-5deg) scale(1.1);
+  }
+  50% {
+    transform: rotate(5deg) scale(1.1);
+  }
+  70% {
+    transform: rotate(0deg) scale(1.1);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 .Logo-Image {
   height: 18px;
 }
-  .Logo-Icon {
+.Logo-Icon {
   height: 40px;
-  }
-
+}
 
 @media screen and (min-width: 900px) {
   .NavBar-Wrapper {
     padding: 0 80px;
   }
   .Logo-Icon {
-  height: 40px;
-  position: relative;
-  bottom: 2px;
-  right: 5px;
-}
+    height: 40px;
+    position: relative;
+    bottom: 2px;
+    right: 5px;
+  }
 }
 
 @media screen and (min-width: 1200px) {
@@ -141,7 +152,7 @@
   transition: all 0.2s ease-in-out;
   display: block;
   width: 100%;
-  padding-left:14px;
+  padding-left: 14px;
 }
 
 .MenuNavBar a:hover {
