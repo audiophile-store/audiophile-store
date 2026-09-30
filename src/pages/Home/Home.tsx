@@ -2,11 +2,12 @@ import { Box } from '@mui/material'
 import './Home.css'
 import ProductSlider from '../../components/ProductSlider/ProductSlider'
 import { Tab, Tabs } from '@mui/material';
-import data from '../../db/products.json';
+import { useAppSelector } from '../../app/hooks';
 import type { Product } from '../../types/product';
 
 export default function Home() {
-  const popularProducts = (data.products as Product[]).filter((item) => item.popularProduct);
+  const products = useAppSelector((state) => state.products.data);
+  const popularProducts = products.filter((item: Product) => item.popularProduct);
   return (
     <Box className='Home-Main-Content'>
       <Tabs

@@ -1,31 +1,28 @@
 import { createSlice } from '@reduxjs/toolkit';
-import JSONData from '../../db/products.json';
+import type { PayloadAction } from '@reduxjs/toolkit';
+import catalogue from '../../db/products.json';
 import type { Product } from '../../types/product';
 
 interface ProductState {
   data: Product[];
-  promoted: Product | null;
 }
 
+// The catalogue is a static JSON file, so it can be loaded synchronously.
+// Swap this for a thunk once the products come from a real API.
 const initialState: ProductState = {
-  data: [],
-  promoted: null,
+  data: catalogue.products as Product[],
 };
 
 export const productSlice = createSlice({
   name: 'products',
   initialState,
   reducers: {
-    fetchProducts: (state) => {
-      state.data = JSONData.products as Product[];
-    },
-    setPromotedProduct: (state) => {
-      state.promoted = state.data.filter((item) => item.promoted)[0] ?? null;
+    setProducts: (state, action: PayloadAction<Product[]>) => {
+      state.data = action.payload;
     },
   },
 });
 
-// Action creators are generated for each case reducer function
-export const { fetchProducts, setPromotedProduct } = productSlice.actions;
+export const { setProducts } = productSlice.actions;
 
 export default productSlice.reducer;

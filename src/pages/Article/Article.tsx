@@ -18,14 +18,19 @@ import type { Product } from '../../types/product';
 
 export default function Article() {
   const { id } = useParams();
-  const [loading, setLoading] = useState(true);
-  const [product, setProduct] = useState<Product | undefined>();
   const [quantity, setQuantity] = useState(1);
   const products = useAppSelector((state) => state.products.data);
   const cartItems = useAppSelector((state) => state.cart.items);
-  const cartItem = cartItems?.filter(item => item?.id === product?.id);
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
+
+  const product = products.find((item: Product) => item.id === id);
+  const cartItem = cartItems.find((item) => item.id === id);
+  const quantityInCart = cartItem?.quantity ?? 0;
+
+  useEffect(() => {
+    setQuantity(1);
+  }, [id]);
 
   const addToCartHandler = () => {
     if (!product) {
@@ -49,8 +54,7 @@ export default function Article() {
 
   const increaseProductHandler = () => {
     setQuantity(quantity + 1)
-    const currentCartItem = cartItem[0];
-    if (currentCartItem && (quantity + 1) + currentCartItem.quantity === currentCartItem.inStock) {
+    if (cartItem && quantity + 1 + quantityInCart === cartItem.inStock) {
       dispatch(openSnackbar('No more products in stock.'))
     }
   }
@@ -59,55 +63,17 @@ export default function Article() {
     setQuantity(quantity - 1)
   }
 
-  useEffect(() => {
-    if (products?.length > 0) {
-      const prod = products.filter((item: Product) => item.id === id);
-      setProduct(prod[0])
-    }
-  }, [products, id]);
-
-  useEffect(() => {
-    setLoading(false)
-  }, [product]);
-
-  if (loading || !product) {
+  if (products.length === 0) {
     return <Box className='Article-Spinner'><CircularProgress /></Box>
   }
 
-  const disableIncreaseButton = () => {
-    if (cartItem.length > 0 && cartItem[0].quantity + quantity === product.inStock) {
-      return true;
-    }
-    if (cartItem.length > 0 && cartItem[0].quantity === product.inStock) {
-      return true;
-    }
-    if (cartItem.length <= 0 && quantity === product.inStock) {
-      return true;
-    }
-    return false;
+  if (!product) {
+    return <Box className='Article-Spinner'><Typography variant='h5'>Product not found.</Typography></Box>
   }
 
-  const disableAddToCartButton = () => {
-    if (cartItem.length > 0 && (cartItem[0].quantity + quantity > product.inStock)) {
-      return true
-    }
-    if (cartItem.length === 0 && quantity > product.inStock) {
-      return true;
-    }
-    if (cartItem.length > 0 && cartItem[0].quantity === product.inStock) {
-      return true;
-    }
-    return false
-  }
-
-  const getAvailableProductStock = () => {
-    if (cartItem?.length) {
-      return product.inStock - cartItem[0].quantity;
-    }
-    if (!cartItem?.length) {
-      return product.inStock;
-    }
-  }
+  const availableStock = product.inStock - quantityInCart;
+  const increaseDisabled = quantity >= availableStock;
+  const addToCartDisabled = availableStock === 0 || quantity > availableStock;
 
   return (
     <Box className='Article'>
@@ -118,7 +84,7 @@ export default function Article() {
         </Box>
         <Box className='Article-Description'>
           <Box className='Article-Title'>
-            { product.newProduct && <Typography className='New-Product-Flag' variant='h7'>NEW PRODUCT</Typography> }
+            { product.newProduct && <Typography className='New-Product-Flag' variant='inherit'>NEW PRODUCT</Typography> }
             <Typography style={ { marginTop: `${product.newProduct ? '10px' : '0px'}` } } variant='h4'>{ product.title }</Typography>
           </Box>
           <Typography variant='body1'>{ product.generalInfo }</Typography>
@@ -133,20 +99,20 @@ export default function Article() {
           <Box className='Article-Controls'>
             <Box className='Article-Controls-Form'>
               <Box className='Article-In-Additional-Info-Container'>
-                { getAvailableProductStock() === 0 ?
-                  <Typography variant='p' className='Available-Quantity'>
+                { availableStock === 0 ?
+                  <Typography variant='inherit' className='Available-Quantity'>
                     Out of stock. We'll restock soon.
                   </Typography>
                   :
-                  <Typography variant='p' className='Available-Quantity'>
-                    Available stock quantity: <span>{ getAvailableProductStock() }</span>
+                  <Typography variant='inherit' className='Available-Quantity'>
+                    Available stock quantity: <span>{ availableStock }</span>
                   </Typography>
                 }
 
                 <Box className='Article-Benefits-Container'>
-                  <Typography className='Article-Benefits' variant='p'><CheckCircleOutlineIcon/>2-Year Warranty</Typography>
-                  <Typography className='Article-Benefits' variant='p'><CheckCircleOutlineIcon />Fast shipping</Typography>
-                  <Typography className='Article-Benefits' variant='p'><PaidOutlinedIcon />Secure payment</Typography>
+                  <Typography className='Article-Benefits' variant='inherit'><CheckCircleOutlineIcon/>2-Year Warranty</Typography>
+                  <Typography className='Article-Benefits' variant='inherit'><CheckCircleOutlineIcon />Fast shipping</Typography>
+                  <Typography className='Article-Benefits' variant='inherit'><PaidOutlinedIcon />Secure payment</Typography>
                 </Box>
               </Box>
               <Box className='Article-Quantity-Input-Container'>
@@ -154,12 +120,12 @@ export default function Article() {
                   quantity={ quantity }
                   increaseHandler={ increaseProductHandler }
                   decreaseHandler={ decreaseProductHandler }
-                  increaseDisabled={ disableIncreaseButton() }
+                  increaseDisabled={ increaseDisabled }
                   decreaseDisabled={ quantity === 1 } />
               </Box>
             </Box>
             <Button
-              disabled={ disableAddToCartButton() }
+              disabled={ addToCartDisabled }
               onClick={ addToCartHandler }
               className='Add-Article'
               variant='contained'>

@@ -32,21 +32,22 @@ export default function Cart() {
   }, [dispatch]);
 
   const increaseProductHandler = (id: string, quantity: number, inStock: number) => {
-    dispatch(increaseCart({ id, quantity }));
+    dispatch(increaseCart({ id }));
     if (quantity === inStock) {
       dispatch(openSnackbar('No more products in stock.'));
     }
   };
 
-  const decreaseProductHandler = (id: string, quantity: number) => {
-    dispatch(decreaseCart({ id, quantity }));
+  const decreaseProductHandler = (id: string) => {
+    dispatch(decreaseCart({ id }));
   };
 
-  if (open) {
-    document.body.classList.add('active-modal');
-  } else {
-    document.body.classList.remove('active-modal');
-  }
+  useEffect(() => {
+    document.body.classList.toggle('active-modal', open);
+    return () => {
+      document.body.classList.remove('active-modal');
+    };
+  }, [open]);
 
   useEffect(() => {
     return () => {
@@ -73,8 +74,8 @@ export default function Cart() {
             <Box flexGrow={ 1 } overflow="auto" padding={ 2 } paddingTop={ 0 }>
             <Divider style={ { backgroundColor: 'rgb(207, 206, 206, 0.5)' } } sx={ { mb: 2 } } />
 
-              { cartItems.map((item: CartItem, index: number) => (
-                <Box key={ index }>
+              { cartItems.map((item: CartItem) => (
+                <Box key={ item.id }>
                   
                   <Box display="flex" alignItems="center" justifyContent="space-between" mb={ 2 }>
                     <Box display="flex" alignItems="center" gap={ 2 }>
@@ -101,7 +102,7 @@ export default function Cart() {
                     <QuantityInput
                       quantity={ item.quantity }
                       increaseHandler={ () => increaseProductHandler(item.id, item.quantity, item.inStock) }
-                      decreaseHandler={ () => decreaseProductHandler(item.id, item.quantity) }
+                      decreaseHandler={ () => decreaseProductHandler(item.id) }
                       increaseDisabled={ item.quantity === item.inStock }
                       decreaseDisabled={ item.quantity <= 1 }
                     />

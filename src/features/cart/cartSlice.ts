@@ -17,66 +17,31 @@ export const cartSlice = createSlice({
   initialState,
   reducers: {
     addToCart: (state, action: PayloadAction<CartItem>) => {
-      const { id, quantity, title, price, image, inStock } = action.payload;
-      if (state.items.length === 0) {
-        state.items.push({
-          id,
-          quantity,
-          title,
-          price,
-          image,
-          inStock,
-        });
-      } else {
-        const alreadyInCart = state.items.find((item) => item.id === id);
-        if (alreadyInCart) {
-          const updatedCart = state.items.map((item) => {
-            if (item.id === id) {
-              return { ...item, quantity: item.quantity + quantity };
-            } else {
-              return item;
-            }
-          });
+      const payload = action.payload;
+      const existing = state.items.find((item) => item.id === payload.id);
 
-          state.items = updatedCart;
-        } else {
-          state.items.push({
-            id,
-            quantity,
-            title,
-            price,
-            image,
-            inStock,
-          });
-        }
-      }
-    },
-    increaseCart: (state, action: PayloadAction<{ id: string; quantity?: number }>) => {
-      const { id } = action.payload;
-      const updated = state.items.map((item) => {
-        if (item.id === id) {
-          return { ...item, quantity: item.quantity + 1 };
-        } else {
-          return { ...item };
-        }
-      });
-      state.items = updated;
-    },
-    decreaseCart: (state, action: PayloadAction<{ id: string; quantity: number }>) => {
-      const { id, quantity } = action.payload;
-      let updated: CartItem[];
-      if (quantity === 1) {
-        updated = state.items.filter((item) => item.id !== id);
+      if (existing) {
+        existing.quantity = Math.min(existing.quantity + payload.quantity, existing.inStock);
       } else {
-        updated = state.items.map((item) => {
-          if (item.id === id) {
-            return { ...item, quantity: item.quantity - 1 };
-          } else {
-            return { ...item };
-          }
-        });
+        state.items.push({ ...payload, quantity: Math.min(payload.quantity, payload.inStock) });
       }
-      state.items = updated;
+    },
+    increaseCart: (state, action: PayloadAction<{ id: string }>) => {
+      const item = state.items.find((entry) => entry.id === action.payload.id);
+      if (item) {
+        item.quantity = Math.min(item.quantity + 1, item.inStock);
+      }
+    },
+    decreaseCart: (state, action: PayloadAction<{ id: string }>) => {
+      const item = state.items.find((entry) => entry.id === action.payload.id);
+      if (!item) {
+        return;
+      }
+      if (item.quantity <= 1) {
+        state.items = state.items.filter((entry) => entry.id !== action.payload.id);
+      } else {
+        item.quantity -= 1;
+      }
     },
     clearCart: (state) => {
       state.items = [];
@@ -90,7 +55,6 @@ export const cartSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
 export const { addToCart, clearCart, openCart, closeCart, increaseCart, decreaseCart } =
   cartSlice.actions;
 

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Grid, Box, Typography, TextField, FormControl, FormLabel, RadioGroup, FormControlLabel, Radio, Button, Card, CardContent, Divider, Dialog, DialogContent } from '@mui/material';
 import './Checkout.css';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -9,26 +9,17 @@ import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import { clearCart } from '../../features/cart/cartSlice';
 import type { CartItem } from '../../types/product';
 
+const REDIRECT_DELAY_MS = 3000;
+const BUTTON_ANIMATION_MS = 800;
+const EMAIL_PATTERN = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+const PHONE_PATTERN = /^\+?[\d\s()-]{6,}$/;
+
 const Checkout = () => {
   const navigate = useNavigate();
-  const [paymentMethod, setPaymentMethod] = useState('cash');
-  const cartItems = useAppSelector((state) => state.cart.items);
   const dispatch = useAppDispatch();
-  const price = cartItems.reduce((acc: number, item: CartItem) => acc + item.price * item.quantity, 0);
-  const vatAmount = price - price / (1 + VAT_RATE);
-  const netPrice = price - vatAmount;
-  const totalPrice = price + SHIPPING_COST;
-  
-  // Format for display
-  const formattedNetPrice = formatCurrency(netPrice);
-  const formattedVAT = formatCurrency(vatAmount);
-  const formattedShipping = formatCurrency(SHIPPING_COST);
-  const formattedTotal = formatCurrency(totalPrice);
-  
-  const handlePaymentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    setPaymentMethod(event.target.value);
-  };
-  
+  const cartItems = useAppSelector((state) => state.cart.items);
+
+  const [paymentMethod, setPaymentMethod] = useState('cash');
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
@@ -36,39 +27,70 @@ const Checkout = () => {
   const [zipCode, setZipCode] = useState('');
   const [city, setCity] = useState('');
   const [country, setCountry] = useState('');
+  const [touched, setTouched] = useState<Record<string, boolean>>({});
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const [orderId, setOrderId] = useState<string | null>(null);
   const [buttonAnimate, setButtonAnimate] = useState(false);
-  
-  const formVerified = name.trim() && email.trim() && phone.trim() && address.trim() && zipCode.trim() && city.trim() && country.trim();
-  const prevFormVerified = React.useRef(formVerified);
 
-  // Animate button when form becomes verified
-  React.useEffect(() => {
-    if (formVerified && !prevFormVerified.current) {
-      setButtonAnimate(false);
-      
-      requestAnimationFrame(() => {
-        setButtonAnimate(true);
-        setTimeout(() => {
-          setButtonAnimate(false);
-        }, 800);
-      });
+  const price = cartItems.reduce((acc: number, item: CartItem) => acc + item.price * item.quantity, 0);
+  const vatAmount = price - price / (1 + VAT_RATE);
+  const netPrice = price - vatAmount;
+  const totalPrice = price + SHIPPING_COST;
+
+  const formattedNetPrice = formatCurrency(netPrice);
+  const formattedVAT = formatCurrency(vatAmount);
+  const formattedShipping = formatCurrency(SHIPPING_COST);
+  const formattedTotal = formatCurrency(totalPrice);
+
+  const errors = useMemo(() => {
+    const result: Record<string, string> = {};
+    if (!name.trim()) result.name = 'Name is required';
+    if (!email.trim()) result.email = 'Email is required';
+    else if (!EMAIL_PATTERN.test(email.trim())) result.email = 'Enter a valid email address';
+    if (!phone.trim()) result.phone = 'Phone number is required';
+    else if (!PHONE_PATTERN.test(phone.trim())) result.phone = 'Enter a valid phone number';
+    if (!address.trim()) result.address = 'Address is required';
+    if (!zipCode.trim()) result.zipCode = 'ZIP code is required';
+    if (!city.trim()) result.city = 'City is required';
+    if (!country.trim()) result.country = 'Country is required';
+    return result;
+  }, [name, email, phone, address, zipCode, city, country]);
+
+  const formVerified = Object.keys(errors).length === 0 && cartItems.length > 0;
+  const prevFormVerified = useRef(formVerified);
+
+  const errorFor = (field: string) => (touched[field] ? errors[field] : undefined);
+  const markTouched = (field: string) => () => setTouched((prev) => ({ ...prev, [field]: true }));
+
+  const handlePaymentChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    setPaymentMethod(event.target.value);
+  };
+
+  useEffect(() => {
+    if (!formVerified || prevFormVerified.current) {
+      prevFormVerified.current = formVerified;
+      return;
     }
     prevFormVerified.current = formVerified;
+    setButtonAnimate(true);
+    const timeout = window.setTimeout(() => setButtonAnimate(false), BUTTON_ANIMATION_MS);
+    return () => window.clearTimeout(timeout);
   }, [formVerified]);
-  
-  const handleCheckout = () => {
-    // Generate order ID
-    const newOrderId = 'ORD-' + Date.now();
-    setOrderId(newOrderId);
-    setShowSuccessModal(true);
-    
-    // Auto redirect after 3 seconds
-    setTimeout(() => {
-      navigate('/order-success', { state: { orderId: newOrderId, total: formattedTotal } });
+
+  useEffect(() => {
+    if (!orderId) {
+      return;
+    }
+    const timeout = window.setTimeout(() => {
+      navigate('/order-success', { state: { orderId, total: formattedTotal } });
       dispatch(clearCart());
-    }, 3000);
+    }, REDIRECT_DELAY_MS);
+    return () => window.clearTimeout(timeout);
+  }, [orderId, formattedTotal, navigate, dispatch]);
+
+  const handleCheckout = () => {
+    setOrderId(`ORD-${Date.now()}`);
+    setShowSuccessModal(true);
   };
 
   return (
@@ -88,36 +110,45 @@ const Checkout = () => {
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12} sm={6}>
-                <TextField 
-                  size="small" 
-                  fullWidth 
-                  label="Name" 
+                <TextField
+                  size="small"
+                  fullWidth
+                  label="Name"
                   variant="outlined"
                   type="text"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
+                  onBlur={markTouched('name')}
+                  error={Boolean(errorFor('name'))}
+                  helperText={errorFor('name') ?? ' '}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField 
-                  size="small" 
-                  fullWidth 
-                  label="Email Address" 
+                <TextField
+                  size="small"
+                  fullWidth
+                  label="Email Address"
                   variant="outlined"
                   type="email"
                   value={email}
                   onChange={(e) => setEmail(e.target.value)}
+                  onBlur={markTouched('email')}
+                  error={Boolean(errorFor('email'))}
+                  helperText={errorFor('email') ?? ' '}
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField 
-                  size="small" 
-                  fullWidth 
-                  label="Phone Number" 
+                <TextField
+                  size="small"
+                  fullWidth
+                  label="Phone Number"
                   variant="outlined"
                   type="tel"
                   value={phone}
                   onChange={(e) => setPhone(e.target.value)}
+                  onBlur={markTouched('phone')}
+                  error={Boolean(errorFor('phone'))}
+                  helperText={errorFor('phone') ?? ' '}
                 />
               </Grid>
             </Grid>
@@ -130,55 +161,64 @@ const Checkout = () => {
             </Typography>
             <Grid container spacing={2}>
               <Grid item xs={12}>
-                <TextField 
-                  size="small" 
-                  fullWidth 
-                  label="Address" 
+                <TextField
+                  size="small"
+                  fullWidth
+                  label="Address"
                   variant="outlined"
                   type="text"
                   value={address}
                   onChange={(e) => setAddress(e.target.value)}
+                  onBlur={markTouched('address')}
+                  error={Boolean(errorFor('address'))}
+                  helperText={errorFor('address') ?? ' '}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField 
-                  size="small" 
-                  fullWidth 
-                  label="ZIP Code" 
+                <TextField
+                  size="small"
+                  fullWidth
+                  label="ZIP Code"
                   variant="outlined"
                   type="text"
                   value={zipCode}
                   onChange={(e) => setZipCode(e.target.value)}
+                  onBlur={markTouched('zipCode')}
+                  error={Boolean(errorFor('zipCode'))}
+                  helperText={errorFor('zipCode') ?? ' '}
                 />
               </Grid>
               <Grid item xs={12} sm={6}>
-                <TextField 
-                  size="small" 
-                  fullWidth 
-                  label="City" 
+                <TextField
+                  size="small"
+                  fullWidth
+                  label="City"
                   variant="outlined"
                   type="text"
                   value={city}
                   onChange={(e) => setCity(e.target.value)}
+                  onBlur={markTouched('city')}
+                  error={Boolean(errorFor('city'))}
+                  helperText={errorFor('city') ?? ' '}
                 />
               </Grid>
               <Grid item xs={12}>
-                <TextField 
-                  size="small" 
-                  fullWidth 
-                  label="Country" 
+                <TextField
+                  size="small"
+                  fullWidth
+                  label="Country"
                   variant="outlined"
                   type="text"
                   value={country}
                   onChange={(e) => setCountry(e.target.value)}
+                  onBlur={markTouched('country')}
+                  error={Boolean(errorFor('country'))}
+                  helperText={errorFor('country') ?? ' '}
                 />
               </Grid>
             </Grid>
           </Box>
 
-          {/* Payment Details */}
-        <Grid item xs={12} md={12}>
-          {/* Payment Details */}
           <Box mb={4}>
             <Typography className="Section-Title" gutterBottom>
               Payment Details
@@ -213,13 +253,12 @@ const Checkout = () => {
             ) : (
               <Box mt={2}>
                 <Typography className="Cash-On-Delivery-Info">
-                  The 'Cash on Delivery' option enables you to pay in cash when our delivery courier arrives at your residence. 
+                  The 'Cash on Delivery' option enables you to pay in cash when our delivery courier arrives at your residence.
                   Just make sure your address is correct so that your order will not be cancelled.
                 </Typography>
               </Box>
             )}
           </Box>
-        </Grid>
         </Grid>
 
         {/* Right Side - Summary */}
@@ -269,10 +308,10 @@ const Checkout = () => {
               </Box>
 
               {/* Continue Button */}
-              <Button 
-                disabled={!formVerified} 
-                fullWidth 
-                variant="contained" 
+              <Button
+                disabled={!formVerified}
+                fullWidth
+                variant="contained"
                 className={`Continue-Button ${buttonAnimate ? 'button-enabled' : ''}`}
                 onClick={handleCheckout}
               >
@@ -284,8 +323,8 @@ const Checkout = () => {
       </Grid>
 
       {/* Success Modal */}
-      <Dialog 
-        open={showSuccessModal} 
+      <Dialog
+        open={showSuccessModal}
         onClose={() => setShowSuccessModal(false)}
         maxWidth="sm"
         fullWidth
