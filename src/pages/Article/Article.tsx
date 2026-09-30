@@ -123,18 +123,8 @@ export default function Article() {
           </Box>
           <Typography variant='body1'>{ product.generalInfo }</Typography>
           <Box className='Article-Additional-Info-Container'>
-            <Box>
+            <Box className='Article-Id-Container'>
               <Typography className='Article-Id' style={ { fontSize: '14px' } } variant='body1'>ID { product.id }</Typography>
-            </Box>
-            <Box className='Article-In-Box-Items-Container'>
-                {/* { product?.inBox.map((item, index) => {
-                  return (
-                    <Box className='In-Box-Items' key={ index }>
-                      <Typography variant='body1'>{ `${item.quantity}x` }</Typography>
-                      <Typography variant='body1'>{ item.name }</Typography>
-                    </Box>
-                  );
-                }) } */}
             </Box>
           </Box>
           <Box className='Article-Price' >
@@ -179,33 +169,6 @@ export default function Article() {
         </Box>
 
       </Box>
-      {/* <Box className='Article-Info'>
-        <Box className='Article-Features'>
-          <Typography variant='h4'>
-            FEATURES
-          </Typography>
-          { product?.features?.map((item, index) => {
-            return (
-              <Typography variant='body1' key={ index }>
-                { item }
-              </Typography>
-            )
-          }) }
-        </Box>
-        <Box className='In-Box'>
-          <Typography variant='h4'>
-            IN THE BOX
-          </Typography>
-          { product?.inBox.map((item, index) => {
-            return (
-              <Box className='In-Box-Items' key={ index }>
-                <Typography variant='body1'>{ `${item.quantity}x` }</Typography>
-                <Typography variant='body1'>{ item.name }</Typography>
-              </Box>
-            );
-          }) }
-        </Box>
-      </Box> */}
     </Box>
   )
 }

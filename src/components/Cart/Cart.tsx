@@ -106,8 +106,7 @@ export default function Cart() {
                       decreaseDisabled={ item.quantity <= 1 }
                     />
                   </Box>
-                  <Divider style={ { backgroundColor: 'rgb(207, 206, 206, 0.5)' } } sx={ { mb: 2 } } /> 
-                  {/* { index !== cartItems.length - 1 && <Divider style={ { backgroundColor: 'white' } } sx={ { mb: 2 } } /> } */}
+                  <Divider style={ { backgroundColor: 'rgb(207, 206, 206, 0.5)' } } sx={ { mb: 2 } } />
                 </Box>
               )) }
             </Box>
