@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 import { Typography, Button } from '@mui/material';
 import { Box } from '@mui/system';
 import './Article.css';
-import CircularProgress from '@mui/material/CircularProgress';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import Gallery from '../../components/Gallery/Gallery';
 import QuantityInput from '../../components/QuantityInput/QuantityInput';
@@ -14,23 +13,25 @@ import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import PaidOutlinedIcon from '@mui/icons-material/PaidOutlined';
 import ActiveLastBreadcrumb from '../../components/Breadcrumbs/Breadcrumbs';
 import { formatCurrency } from '../../utils/utils';
-import type { Product } from '../../types/product';
+import { fetchProduct } from '../../features/product/productSlice';
+import ProductRequestState from '../../components/ProductRequestState/ProductRequestState';
 
 export default function Article() {
   const { id } = useParams();
   const [quantity, setQuantity] = useState(1);
-  const products = useAppSelector((state) => state.products.data);
+  const detail = useAppSelector((state) => (id ? state.products.details[id] : undefined));
   const cartItems = useAppSelector((state) => state.cart.items);
   const dispatch = useAppDispatch();
   const { enqueueSnackbar } = useSnackbar();
 
-  const product = products.find((item: Product) => item.id === id);
+  const product = detail?.data;
   const cartItem = cartItems.find((item) => item.id === id);
   const quantityInCart = cartItem?.quantity ?? 0;
 
   useEffect(() => {
     setQuantity(1);
-  }, [id]);
+    if (id) dispatch(fetchProduct(id));
+  }, [id, dispatch]);
 
   const addToCartHandler = () => {
     if (!product) {
@@ -65,23 +66,21 @@ export default function Article() {
     setQuantity(quantity - 1);
   };
 
-  if (products.length === 0) {
+  if (!product || detail?.status !== 'succeeded') {
     return (
       <Box className="Article-Spinner">
-        <CircularProgress />
+        <ProductRequestState
+          status={detail?.status ?? 'idle'}
+          error={detail?.error ?? null}
+          onRetry={() => {
+            if (id) dispatch(fetchProduct(id));
+          }}
+        />
       </Box>
     );
   }
 
-  if (!product) {
-    return (
-      <Box className="Article-Spinner">
-        <Typography variant="h5">Product not found.</Typography>
-      </Box>
-    );
-  }
-
-  const availableStock = product.inStock - quantityInCart;
+  const availableStock = Math.max(0, product.inStock - quantityInCart);
   const increaseDisabled = quantity >= availableStock;
   const addToCartDisabled = availableStock === 0 || quantity > availableStock;
 
