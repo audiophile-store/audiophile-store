@@ -113,6 +113,41 @@
   padding: 24px 0;
 }
 
+.Home-Skeleton-Product-Image.MuiSkeleton-root {
+  position: absolute;
+  top: 16px;
+  left: 20px;
+  width: calc(100% - 40px);
+  height: calc(100% - 32px);
+}
+
+.Home-Skeleton-Favorite.MuiSkeleton-root {
+  position: absolute;
+  top: 18px;
+  right: 18px;
+}
+
+.Home-Skeleton-Title {
+  width: 100%;
+  height: 48px;
+}
+
+.Home-Skeleton-Card .Product-Card-Tags .MuiSkeleton-root {
+  max-width: 100%;
+  border-radius: 12px;
+}
+
+.Home-Skeleton-Recent-Image.MuiSkeleton-root {
+  width: 76px;
+  height: 76px;
+  flex-shrink: 0;
+  border-radius: 3px;
+}
+
+.Home-Skeleton-Recent-Info {
+  flex: 1;
+}
+
 @media (max-width: 1199px) {
   .Home-Recent-Grid {
     grid-template-columns: repeat(3, minmax(0, 1fr));
