@@ -78,6 +78,32 @@ beforeEach(() => {
 });
 
 describe('products service integration contract', () => {
+  it('keeps the product detail skeleton visible when development loading is forced', async () => {
+    vi.stubEnv('VITE_FORCE_PRODUCTS_LOADING', 'true');
+    const store = renderStorefront(`/article/${headphones.id}`);
+
+    await waitFor(() =>
+      expect(store.getState().products.details[headphones.id]?.status).toBe('succeeded')
+    );
+    expect(screen.getByRole('progressbar', { name: 'Loading products' })).toBeVisible();
+    expect(screen.queryByRole('button', { name: 'ADD TO CART' })).not.toBeInTheDocument();
+  });
+
+  it('uses the existing toast when adding a catalogue product to the cart', async () => {
+    const store = renderStorefront();
+
+    const add = await screen.findByRole('button', {
+      name: `Add to cart: ${headphones.title}`,
+    });
+    fireEvent.click(add);
+
+    expect(await screen.findByText('The article has been added to your cart!')).toBeVisible();
+    expect(store.getState().cart.items).toEqual(
+      expect.arrayContaining([expect.objectContaining({ id: headphones.id, quantity: 1 })])
+    );
+    expect(store.getState().snackbar.isOpen).toBe(false);
+  });
+
   it('does not import the static catalogue in application code', () => {
     for (const [path, source] of Object.entries(applicationSources)) {
       expect(source, path).not.toMatch(
@@ -248,8 +274,8 @@ describe('products service integration contract', () => {
       true
     );
     expect(screen.getByText(/123,45\s*\u20ac/)).toBeInTheDocument();
-    expect(screen.getByText(/Available stock quantity:/)).toHaveTextContent('2');
-    const images = screen.getAllByRole('img', { name: 'Test alt' });
+    expect(screen.getByText(/In stock/)).toHaveTextContent('2');
+    const images = screen.getAllByRole('img', { name: `${headphones.title}, view 1` });
     expect(images[0]).toHaveAttribute('src', expect.stringContaining('xx99II/main.png'));
     expect(images[0].getAttribute('src')).not.toContain(apiUrl);
   });

@@ -1,4 +1,4 @@
-import { Box, Snackbar, IconButton, Grid } from '@mui/material';
+import { Box, Snackbar, IconButton } from '@mui/material';
 import './Layout.css';
 import CloseIcon from '@mui/icons-material/Close';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
@@ -25,7 +25,7 @@ export default function Layout() {
   );
 
   return (
-    <Box width="100%">
+    <Box className="Layout">
       <Cart />
       <Snackbar
         anchorOrigin={{ vertical: 'bottom', horizontal: 'right' }}
@@ -35,15 +35,15 @@ export default function Layout() {
         message={snackbarMessage}
         action={action}
       />
-      <Grid container width="100%">
-        <Grid item xl={12} width="100%">
-          <ResponsiveAppBar />
-        </Grid>
-        <Grid item xl={12} width="100%">
-          <PageRoutes />
-        </Grid>
-      </Grid>
-      <Footer />
+      <Box component="header">
+        <ResponsiveAppBar />
+      </Box>
+      <Box component="main" className="Layout-Main">
+        <PageRoutes />
+      </Box>
+      <Box className="Layout-Footer">
+        <Footer />
+      </Box>
     </Box>
   );
 }

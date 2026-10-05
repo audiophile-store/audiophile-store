@@ -1,77 +1,24 @@
-.AllProducts {
-  padding: 30px 20px 0 20px;
-
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-}
-
-@media screen and (min-width: 600px) {
-  .AllProducts {
-    padding: 30px 100px;
-  }
-}
-
-@media screen and (min-width: 900px) {
-  .AllProducts {
-    padding: 30px 100px;
-  }
-}
-
-@media screen and (min-width: 1200px) {
-  .AllProducts {
-    padding: 30px 120px;
-    /* margin-bottom: 80px; */
-  }
-}
-
-@media screen and (min-width: 1536px) {
-  .AllProducts {
-    padding: 30px 200px;
-  }
-  .allproducts-grid-item {
-    padding-left: 0 !important;
-  }
-}
-
-@media (max-width: 896px) and (orientation: landscape) {
-  .allproducts-grid-item {
-    max-width: 100% !important;
-    flex-basis: 100% !important;
-  }
-}
-
-@media (max-width: 667px) and (orientation: landscape) {
-  .AllProducts {
-    padding: 20px 50px 0 50px;
-  }
-}
-
 .AllProducts-ShowMore {
   display: flex;
   justify-content: center;
-  margin-top: 10px;
 }
 
-.AllProducts-ShowMore-Button {
+.AllProducts-ShowMore-Button.MuiButton-root {
   display: flex;
   flex-direction: column;
-  align-items: center;
   gap: 6px;
   padding: 12px 40px;
-  font-size: 13px !important;
+  font-size: 13px;
   font-weight: 600;
-  letter-spacing: 1.5px;
-  text-transform: uppercase;
-  color: #000;
-  border: 1px solid #000;
+  letter-spacing: 0;
+  color: #101010;
+  border: 1px solid #101010;
   border-radius: 0;
-  transition: color 0.3s ease;
 }
 
-.AllProducts-ShowMore-Button:hover {
+.AllProducts-ShowMore-Button.MuiButton-root:hover {
   color: #d87d4a;
-  background-color: transparent !important;
+  background-color: transparent;
 }
 
 .AllProducts-ShowMore-Arrow {
