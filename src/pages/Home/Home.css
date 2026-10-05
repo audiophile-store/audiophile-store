@@ -1,97 +1,145 @@
 .Home-Main-Content {
   box-sizing: border-box;
-  padding: 0 30px;
-  margin-top: 50px;
-}
-.Home-Header {
-  margin: 0;
-}
-
-.Home-Grid-Item {
-  margin-bottom: 140px;
+  width: 100%;
+  max-width: 1264px;
+  margin: 0 auto;
+  padding: 56px 24px 80px;
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
 }
 
-.Categories-Tabs button {
-  font-size: 14px;
+.Home-Section-Header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  margin-bottom: 20px;
 }
 
-.Home-Categories-Container {
-  margin-top: 10px;
-  padding: 0 10px;
+.Home-Section-Header h1,
+.Home-Section-Header h2 {
+  font-family: inherit;
+  font-size: 26px;
+  font-weight: 500;
+  line-height: 36px;
 }
 
-@media screen and (min-width: 600px) {
+.Home-View-All.MuiButton-root,
+.Home-Clear.MuiButton-root {
+  flex-shrink: 0;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+.Home-View-All.MuiButton-root {
+  color: #a9502c;
+}
+
+.Home-Clear.MuiButton-root {
+  color: #757575;
+}
+
+.Home-Popular-Grid,
+.Home-Recent-Grid {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 24px;
+}
+
+.Home-Popular-Grid .Product-Card-Image {
+  aspect-ratio: 4 / 3;
+}
+
+.Home-Popular-Grid .Product-Card-Information {
+  padding: 16px;
+  gap: 12px;
+}
+
+.Home-Popular-Grid .Product-Card-Title {
+  font-size: 15px;
+}
+
+.Home-Recent-Card {
+  min-width: 0;
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  padding: 10px;
+  border: 1px solid rgb(0 0 0 / 12%);
+  border-radius: 4px;
+  box-shadow: 0 1px 2px rgb(0 0 0 / 12%);
+  background: #ffffff;
+  color: inherit;
+  text-decoration: none;
+}
+
+.Home-Recent-Card:focus-visible {
+  outline: 2px solid #d87d4a;
+  outline-offset: 4px;
+}
+
+.Home-Recent-Card img {
+  width: 74px;
+  height: 74px;
+  flex-shrink: 0;
+  object-fit: contain;
+  border: 1px solid rgb(0 0 0 / 8%);
+  border-radius: 3px;
+}
+
+.Home-Recent-Info {
+  min-width: 0;
+}
+
+.Home-Recent-Info h3 {
+  font-size: 13px;
+  font-weight: 500;
+  line-height: 20px;
+  overflow-wrap: anywhere;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+
+.Home-Recent-Price.MuiTypography-root {
+  margin-top: 4px;
+  font-size: 13px;
+  color: #a9502c;
+}
+
+.Home-Empty.MuiTypography-root {
+  padding: 24px 0;
+}
+
+@media (max-width: 1199px) {
+  .Home-Recent-Grid {
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 899px) {
+  .Home-Popular-Grid,
+  .Home-Recent-Grid {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 599px) {
   .Home-Main-Content {
-    padding: 0 100px;
+    padding: 32px 20px 48px;
+    gap: 36px;
   }
-  .Home-Header {
-    margin-bottom: 0px;
-  }
-}
 
-@media screen and (min-width: 900px) {
-  .Home-Main-Content {
-    padding: 0 100px;
+  .Home-Section-Header h1,
+  .Home-Section-Header h2 {
+    font-size: 22px;
   }
-  .Home-Header {
-    margin-bottom: 60px;
-  }
-  .Commercial-Info > h4 {
-    margin: 0 0 40px 0;
-    text-align: left;
-    font-size: 34px;
-  }
-  .Commercial-Info > p {
-    width: unset;
-    margin: 0 0 40px 0;
-    text-align: left;
-  }
-}
 
-@media screen and (min-width: 1200px) {
-  .Home-Main-Content {
-    padding: 0 120px;
-  }
-  .Commercial-Info {
-    align-items: start;
-    width: 100%;
-  }
-  .Commercial-Info > h4 {
-    width: 80%;
-    text-align: left;
-    margin-bottom: 20px;
-    font-size: 40px;
-  }
-  .Commercial-Info > p {
-    width: 80%;
-    text-align: left;
-  }
-  .Commercial-Image {
-    background-position: center;
-    height: 500px;
-    background-size: contain;
-
-    background-position: top;
-    order: 1;
-    background-position-x: center;
-    background-position-y: center;
-  }
-}
-
-@media screen and (min-width: 1536px) {
-  .Home-Main-Content {
-    padding: 0 200px 0 200px;
-  }
-  .Commercial-Image {
-    background-position: right;
-    background-position-y: top;
-    background-size: cover;
-    min-height: 540px;
-  }
-}
-
-@media (max-width: 900px) and (orientation: landscape) {
-  .Home-Main-Content {
-    padding: 0 20px;
+  .Home-Popular-Grid,
+  .Home-Recent-Grid {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 20px;
   }
 }
