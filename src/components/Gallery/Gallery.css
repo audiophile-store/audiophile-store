@@ -9,8 +9,34 @@
   width: 100%;
   aspect-ratio: 1 / 1;
   border-radius: 5px;
-  padding-bottom: 32px;
   box-sizing: border-box;
+}
+
+.Gallery-Thumbnails {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  margin-top: 16px;
+}
+
+.Gallery-Thumbnail {
+  width: 64px;
+  height: 64px;
+  padding: 4px;
+  border: 1px solid rgb(0 0 0 / 12%);
+  border-radius: 4px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.Gallery-Thumbnail[aria-pressed='true'] {
+  border-color: #d87d4a;
+}
+
+.Gallery-Thumbnail img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
 }
 
 .product-gallery .main-slider .swiper-slide {

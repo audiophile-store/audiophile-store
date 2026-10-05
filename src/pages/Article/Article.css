@@ -134,7 +134,7 @@
   width: 100%;
 }
 
-.Article-Controls > button {
+.Article-Controls > button:not(.Article-Favorite) {
   padding: 10px 20px;
   width: 100%;
   background-color: #d87d4a;
@@ -144,7 +144,7 @@
   box-shadow: none;
 }
 
-.Article-Controls > button:hover {
+.Article-Controls > button:not(.Article-Favorite):hover {
   background-color: #d87d4a;
   color: white;
 }
@@ -169,8 +169,9 @@
 }
 
 .Article-Benefits-Container .Article-Benefits .MuiSvgIcon-root {
-  font-size: 16px;
+  font-size: 18px;
   flex-shrink: 0;
+  color: #a67c62;
 }
 
 .Article-In-Additional-Info-Container .Available-Quantity {
@@ -268,7 +269,7 @@
   .Article-Controls {
     align-items: flex-end;
   }
-  .Article-Controls > button {
+  .Article-Controls > button:not(.Article-Favorite) {
     width: 100%;
   }
 }
@@ -316,5 +317,178 @@
   }
   .Article-Controls-Form {
     flex-direction: column;
+  }
+}
+
+.Article-Gallery {
+  border-top: 0;
+  border: 1px solid rgb(0 0 0 / 8%);
+  border-radius: 8px;
+  background: #fff;
+  padding: 24px !important;
+  box-sizing: border-box;
+}
+
+.Article-Description {
+  border: 1px solid rgb(0 0 0 / 8%);
+  border-radius: 8px;
+  box-shadow: none;
+  background: #fff;
+}
+
+.Article-Metadata {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.Article-Metadata .New-Product-Flag {
+  position: static;
+  width: auto;
+  color: #d87d4a;
+  letter-spacing: 2px;
+  font-size: 12px;
+  text-align: left;
+}
+
+.Article-Description .Article-Id {
+  width: auto;
+  margin-left: auto;
+  font-size: 12px;
+  text-align: right;
+}
+
+.Article-Price-Stock {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 16px;
+}
+
+.Article-Description .Article-Price {
+  border: 0;
+}
+
+.Article-Description .Article-Price > h4 {
+  padding: 0;
+  font-size: 32px;
+  line-height: 1.2;
+}
+
+.Article-Description .Available-Quantity {
+  font-style: normal;
+  font-size: 14px;
+}
+
+.Article-Benefits-Container {
+  justify-content: flex-start;
+  gap: 24px;
+  padding: 14px 0;
+  border-top: 1px solid rgb(0 0 0 / 8%);
+  border-bottom: 1px solid rgb(0 0 0 / 8%);
+}
+
+.Article .Article-Controls {
+  flex-direction: row;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+
+.Article .Article-Quantity-Input-Container {
+  width: auto;
+  margin: 0;
+  align-self: center;
+}
+
+.Article .Article-Controls > button:not(.Article-Favorite) {
+  flex: 1 1 180px;
+  width: auto;
+  min-width: 160px;
+}
+
+.Article-Favorite.MuiIconButton-root {
+  flex: 0 0 42px;
+  width: 42px;
+  min-width: 42px;
+  height: 42px;
+  padding: 0;
+  border: 1px solid rgb(0 0 0 / 15%);
+  border-radius: 8px;
+  background: #fff;
+  color: #8a8a8a;
+  box-shadow: none;
+}
+
+.Article-Favorite.MuiIconButton-root:hover,
+.Article-Favorite.MuiIconButton-root[aria-pressed='true'] {
+  background: #fff;
+  color: #d87d4a;
+}
+
+.Available-Quantity-In-Stock {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 4px 10px;
+  border: 1px solid #c8e6c9;
+  border-radius: 16px;
+  background: #e8f5e9;
+  color: #2e7d32;
+  font-size: 13px;
+  font-weight: 500;
+  opacity: 1;
+}
+
+.Stock-Dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #2e7d32;
+}
+
+.Article-Copy {
+  margin: 0;
+  color: #757575;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.65;
+  opacity: 1;
+}
+
+.Article-Details {
+  border-top: 0;
+  padding-top: 8px;
+}
+
+.Article-Details .MuiTab-root {
+  min-height: 42px;
+  padding: 8px 16px;
+  text-transform: uppercase;
+  color: rgb(0 0 0 / 55%);
+}
+
+.Article-Details .MuiTab-root.Mui-selected {
+  color: #d87d4a;
+}
+
+.Article-Details .MuiTabs-indicator {
+  background-color: #d87d4a;
+}
+
+.Article-Details ul {
+  margin: 8px 0 16px;
+  padding-left: 18px;
+}
+
+@media (max-width: 599px) {
+  .Article .Article-Controls {
+    align-items: stretch;
+  }
+
+  .Article .Article-Controls > button:not(.Article-Favorite) {
+    width: 100%;
   }
 }

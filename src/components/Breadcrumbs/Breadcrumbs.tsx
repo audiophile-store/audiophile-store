@@ -2,8 +2,9 @@ import Breadcrumbs from '@mui/material/Breadcrumbs';
 import { Link, useLocation } from 'react-router-dom';
 import { useAppSelector } from '../../app/hooks';
 import './Breadcrumbs.css';
+import type { Product } from '../../types/product';
 
-export default function ActiveLastBreadcrumb() {
+export default function ActiveLastBreadcrumb({ product }: { product?: Product }) {
   const { pathname } = useLocation();
   const id = pathname.split('/').pop();
   const products = useAppSelector((state) => state.products.data);
@@ -11,7 +12,7 @@ export default function ActiveLastBreadcrumb() {
   let type = '';
   let articlePaths: string[] = [];
   if (isArticlePage) {
-    type = products?.find((item) => item.id === id)?.type ?? '';
+    type = product?.type ?? products?.find((item) => item.id === id)?.type ?? '';
     articlePaths = pathname.split('/').filter((path) => path !== '');
   }
 
@@ -26,7 +27,7 @@ export default function ActiveLastBreadcrumb() {
         </Link>
         {isArticlePage && (
           <Link className="Breadcrumb-Link" to="#">
-            {articlePaths[1]}
+            {product?.title ?? articlePaths[1]}
           </Link>
         )}
       </Breadcrumbs>
