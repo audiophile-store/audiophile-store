@@ -50,6 +50,8 @@ function NavigationControl() {
       <button onClick={() => navigate(`/article/${speakers.id}`)}>Open next service product</button>
       <button onClick={() => navigate(`/article/${headphones.id}`)}>Open headphones</button>
       <button onClick={() => navigate('/')}>Go home</button>
+      <button onClick={() => navigate('/products')}>Show full catalogue</button>
+      <button onClick={() => navigate('/products?popular=true')}>Show popular catalogue</button>
     </>
   );
 }
@@ -341,6 +343,86 @@ describe('products service integration contract', () => {
       .toEqual(popularProducts.slice(0, 4).map((product) => product.title));
     expect(within(section).queryByText(popularProducts[4].title)).not.toBeInTheDocument();
     expect(within(section).queryByText(popularProducts[5].title)).not.toBeInTheDocument();
+
+    fireEvent.click(within(section).getByRole('link', { name: 'View all' }));
+    await screen.findByRole('heading', { name: popularProducts[5].title });
+    expect(screen.getByRole('heading', { level: 1, name: 'Popular products' })).toBeVisible();
+    expect(screen.getAllByRole('heading', { level: 4 }).map((node) => node.textContent))
+      .toEqual(popularProducts.map((product) => product.title));
+    expect(screen.queryByRole('heading', { name: earphones.title })).not.toBeInTheDocument();
+    expect(fetchMock.mock.calls.filter(([input]) => requestPath(input) === '/products'))
+      .toHaveLength(1);
+  });
+
+  it('keeps pagination scoped to popular products and resets when the query changes', async () => {
+    const popularProducts = Array.from({ length: 8 }, (_, index) => ({
+      ...headphones,
+      id: `popular-${index}`,
+      title: `Popular product ${index}`,
+    }));
+    mockCatalogue([earphones, ...popularProducts]);
+    renderStorefront('/products?popular=true');
+
+    await screen.findByRole('heading', { name: popularProducts[0].title });
+    expect(screen.getByText('8 products')).toBeVisible();
+    expect(screen.getAllByRole('heading', { level: 4 })).toHaveLength(6);
+    fireEvent.click(screen.getByRole('button', { name: 'Show More' }));
+    expect(screen.getAllByRole('heading', { level: 4 }).map((node) => node.textContent))
+      .toEqual(popularProducts.map((product) => product.title));
+    expect(screen.queryByRole('heading', { name: earphones.title })).not.toBeInTheDocument();
+
+    fireEvent.click(screen.getByRole('button', { name: 'Show full catalogue' }));
+    await screen.findByRole('heading', { level: 1, name: 'All products' });
+    expect(screen.getByText('9 products')).toBeVisible();
+    expect(screen.getByRole('heading', { name: earphones.title })).toBeVisible();
+    expect(screen.getAllByRole('heading', { level: 4 })).toHaveLength(6);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Show popular catalogue' }));
+    await screen.findByRole('heading', { level: 1, name: 'Popular products' });
+    expect(screen.getByText('8 products')).toBeVisible();
+    expect(screen.getAllByRole('heading', { level: 4 })).toHaveLength(6);
+    expect(screen.queryByRole('heading', { name: earphones.title })).not.toBeInTheDocument();
+  });
+
+  it.each(['/products', '/products?popular=false', '/products?popular=other'])(
+    'preserves the full catalogue on %s',
+    async (path) => {
+      renderStorefront(path);
+      await screen.findByRole('heading', { name: headphones.title });
+      expect(screen.getByRole('heading', { level: 1, name: 'All products' })).toBeVisible();
+      expect(screen.getAllByRole('heading', { level: 4 }).map((node) => node.textContent))
+        .toEqual(products.map((product) => product.title));
+    }
+  );
+
+  it('shows the popular title during loading and an empty result when none are popular', async () => {
+    let resolveCatalogue!: (response: Response) => void;
+    fetchMock.mockReturnValue(new Promise<Response>((resolve) => { resolveCatalogue = resolve; }));
+    renderStorefront('/products?popular=true');
+
+    await screen.findByRole('progressbar', { name: 'Loading products' });
+    expect(screen.getByRole('heading', { level: 1, name: 'Popular products' })).toBeVisible();
+    await act(async () => resolveCatalogue(jsonResponse({
+      products: products.map((product) => ({ ...product, popularProduct: false })),
+    })));
+    await screen.findByText('No products found.');
+    expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+    expect(screen.getByRole('heading', { level: 1, name: 'Popular products' })).toBeVisible();
+    expect(screen.queryByRole('heading', { name: headphones.title })).not.toBeInTheDocument();
+  });
+
+  it('preserves the popular query through an API error and retry', async () => {
+    fetchMock.mockResolvedValue(jsonResponse({ error: 'Service unavailable' }, 500));
+    renderStorefront('/products?popular=true');
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Service unavailable');
+    expect(screen.getByRole('heading', { level: 1, name: 'Popular products' })).toBeVisible();
+    mockCatalogue();
+    fireEvent.click(screen.getByRole('button', { name: 'Retry' }));
+    await screen.findByRole('heading', { name: headphones.title });
+    expect(screen.getByText('1 product')).toBeVisible();
+    expect(screen.queryByRole('heading', { name: earphones.title })).not.toBeInTheDocument();
+    expect(screen.queryByRole('heading', { name: speakers.title })).not.toBeInTheDocument();
   });
 
   it('records successful views, moves revisited products first, and clears persisted history', async () => {
@@ -395,7 +477,7 @@ describe('products service integration contract', () => {
     await screen.findByRole('heading', { name: headphones.title });
     const popularSection = await screen.findByRole('region', { name: 'Popular products' });
     expect(within(popularSection).getByRole('link', { name: 'View all' }))
-      .toHaveAttribute('href', '/products');
+      .toHaveAttribute('href', '/products?popular=true');
     expect(screen.getByRole('region', { name: 'Recently viewed' })).toBeVisible();
     expect(screen.queryByRole('tab')).not.toBeInTheDocument();
     fireEvent.click(within(popularSection).getByRole('button', {

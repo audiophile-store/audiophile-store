@@ -9,9 +9,10 @@ import HomeSkeleton from '../../pages/Home/HomeSkeleton';
 interface CatalogueBoundaryProps {
   children: ReactNode;
   empty: boolean;
+  title?: string;
 }
 
-export default function CatalogueBoundary({ children, empty }: CatalogueBoundaryProps) {
+export default function CatalogueBoundary({ children, empty, title }: CatalogueBoundaryProps) {
   const { status, error } = useAppSelector((state) => state.products);
   const forceLoading =
     import.meta.env.DEV && import.meta.env.VITE_FORCE_PRODUCTS_LOADING === 'true';
@@ -33,7 +34,7 @@ export default function CatalogueBoundary({ children, empty }: CatalogueBoundary
       <Box className="Product-Catalogue-Surface">
         <Box className="Catalogue-State">
           <Box className="Catalogue-State-Header">
-            <Typography variant="h4" component="h1">{titles[pathname] || 'Products'}</Typography>
+            <Typography variant="h4" component="h1">{title || titles[pathname] || 'Products'}</Typography>
             {loading && <Skeleton variant="text" width={80} height={20} aria-hidden="true" />}
           </Box>
           {loading && pathname !== '/' && pathname !== '/admin' && (

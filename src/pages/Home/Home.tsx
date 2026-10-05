@@ -29,7 +29,7 @@ export default function Home() {
             </Typography>
             <Button
               component={Link}
-              to="/products"
+              to="/products?popular=true"
               endIcon={<ArrowForwardIcon />}
               className="Home-View-All"
             >
