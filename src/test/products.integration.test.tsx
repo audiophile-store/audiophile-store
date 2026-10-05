@@ -275,6 +275,57 @@ describe('products service integration contract', () => {
     expect(screen.queryByText(earphones.title)).not.toBeInTheDocument();
   });
 
+  it('shows four popular and compact recent skeletons until the home catalogue loads', async () => {
+    let resolveCatalogue!: (response: Response) => void;
+    fetchMock.mockReturnValue(new Promise<Response>((resolve) => { resolveCatalogue = resolve; }));
+    renderStorefront('/');
+
+    const loading = await screen.findByRole('progressbar', { name: 'Loading products' });
+    expect(loading).toHaveAttribute('aria-busy', 'true');
+    expect(loading.querySelectorAll('.Home-Popular-Grid > .Product-Card')).toHaveLength(4);
+    expect(loading.querySelectorAll('.Home-Recent-Grid > .Home-Recent-Card')).toHaveLength(3);
+    expect(loading.querySelector('.Product-Request-Skeleton-List')).toBeNull();
+    expect(screen.queryByRole('button', { name: 'Clear' })).not.toBeInTheDocument();
+    expect(screen.queryByRole('link', { name: 'View all' })).not.toBeInTheDocument();
+
+    await act(async () => resolveCatalogue(jsonResponse({ products })));
+    await screen.findByRole('heading', { name: headphones.title });
+    expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+    expect(screen.getByText('Products you view will appear here.')).toBeVisible();
+  });
+
+  it('uses the saved history count for recently viewed skeletons', async () => {
+    localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify([speakers.id, headphones.id]));
+    fetchMock.mockReturnValue(new Promise<Response>(() => {}));
+    renderStorefront('/');
+
+    const loading = await screen.findByRole('progressbar', { name: 'Loading products' });
+    expect(loading.querySelectorAll('.Home-Recent-Grid > .Home-Recent-Card')).toHaveLength(2);
+  });
+
+  it('keeps the home skeleton visible when development loading is forced', async () => {
+    vi.stubEnv('VITE_FORCE_PRODUCTS_LOADING', 'true');
+    const store = renderStorefront('/');
+    await waitFor(() => expect(store.getState().products.status).toBe('succeeded'));
+
+    const loading = screen.getByRole('progressbar', { name: 'Loading products' });
+    expect(loading.querySelectorAll('.Home-Popular-Grid > .Product-Card')).toHaveLength(4);
+    expect(loading.querySelectorAll('.Home-Recent-Grid > .Home-Recent-Card')).toHaveLength(3);
+    expect(screen.queryByRole('heading', { name: headphones.title })).not.toBeInTheDocument();
+  });
+
+  it('replaces the home skeleton with an error and recovers through retry', async () => {
+    fetchMock.mockResolvedValue(jsonResponse({ error: 'Service unavailable' }, 500));
+    renderStorefront('/');
+
+    expect(await screen.findByRole('alert')).toHaveTextContent('Service unavailable');
+    expect(screen.queryByRole('progressbar')).not.toBeInTheDocument();
+    mockCatalogue();
+    fireEvent.click(screen.getByRole('button', { name: 'Retry' }));
+    await screen.findByRole('heading', { name: headphones.title });
+    expect(screen.getByRole('region', { name: 'Recently viewed' })).toBeVisible();
+  });
+
   it('shows only the first four popular products in server order on the home page', async () => {
     const popularProducts = Array.from({ length: 6 }, (_, index) => ({
       ...headphones,
@@ -284,6 +335,7 @@ describe('products service integration contract', () => {
     mockCatalogue([earphones, ...popularProducts]);
     renderStorefront('/');
 
+    await screen.findByRole('heading', { name: popularProducts[0].title });
     const section = await screen.findByRole('region', { name: 'Popular products' });
     expect(within(section).getAllByRole('heading', { level: 4 }).map((node) => node.textContent))
       .toEqual(popularProducts.slice(0, 4).map((product) => product.title));
@@ -327,6 +379,7 @@ describe('products service integration contract', () => {
     mockCatalogue(products.map((product) => ({ ...product, popularProduct: false })));
     renderStorefront('/');
 
+    await screen.findByRole('heading', { name: speakers.title });
     const recentSection = await screen.findByRole('region', { name: 'Recently viewed' });
     expect(within(recentSection).getAllByRole('heading', { level: 3 }).map((node) => node.textContent))
       .toEqual([speakers.title, earphones.title]);
@@ -339,6 +392,7 @@ describe('products service integration contract', () => {
 
   it('shows separate popular and recent sections with working cart and catalogue actions', async () => {
     const store = renderStorefront('/');
+    await screen.findByRole('heading', { name: headphones.title });
     const popularSection = await screen.findByRole('region', { name: 'Popular products' });
     expect(within(popularSection).getByRole('link', { name: 'View all' }))
       .toHaveAttribute('href', '/products');

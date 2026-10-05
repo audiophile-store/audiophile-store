@@ -4,6 +4,7 @@ import { useLocation } from 'react-router-dom';
 import { useAppDispatch, useAppSelector } from '../../app/hooks';
 import { fetchProducts } from '../../features/product/productSlice';
 import ProductRequestState from '../ProductRequestState/ProductRequestState';
+import HomeSkeleton from '../../pages/Home/HomeSkeleton';
 
 interface CatalogueBoundaryProps {
   children: ReactNode;
@@ -27,6 +28,7 @@ export default function CatalogueBoundary({ children, empty }: CatalogueBoundary
 
   if (forceLoading || status !== 'succeeded' || empty) {
     const loading = forceLoading || status === 'idle' || status === 'loading';
+    if (loading && pathname === '/') return <HomeSkeleton />;
     return (
       <Box className="Product-Catalogue-Surface">
         <Box className="Catalogue-State">
