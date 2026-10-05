@@ -12,6 +12,10 @@ A demo e-commerce storefront for audio equipment, built with React, TypeScript a
 
 ![Home page](docs/screenshots/home.png)
 
+### Products page
+
+![Products page](docs/screenshots/products.png)
+
 ### Product page
 
 ![Product page](docs/screenshots/product.png)
