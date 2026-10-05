@@ -19,6 +19,7 @@ import ActiveLastBreadcrumb from '../../components/Breadcrumbs/Breadcrumbs';
 import { formatCurrency } from '../../utils/utils';
 import { fetchProduct } from '../../features/product/productSlice';
 import ProductRequestState from '../../components/ProductRequestState/ProductRequestState';
+import { recordProductView } from '../../features/recentlyViewed/recentlyViewedSlice';
 
 export default function Article() {
   const { id } = useParams();
@@ -33,6 +34,7 @@ export default function Article() {
   const { enqueueSnackbar } = useSnackbar();
 
   const product = detail?.data;
+  const productId = product?.id;
   const cartItem = cartItems.find((item) => item.id === id);
   const quantityInCart = cartItem?.quantity ?? 0;
 
@@ -46,6 +48,12 @@ export default function Article() {
     }
     if (id) dispatch(fetchProduct(id));
   }, [id, dispatch]);
+
+  useEffect(() => {
+    if (!forceLoading && detail?.status === 'succeeded' && productId && productId === id) {
+      dispatch(recordProductView(productId));
+    }
+  }, [id, productId, detail?.status, forceLoading, dispatch]);
 
   const toggleFavorite = () => {
     const nextFavorite = !favorite;

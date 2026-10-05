@@ -18,10 +18,7 @@ const PageRoutes = () => {
 
   return (
     <Routes>
-      <Route
-        path="/"
-        element={catalogue(<Home />, !products.some((product) => product.popularProduct))}
-      />
+      <Route path="/" element={catalogue(<Home />, false)} />
       <Route path="/products" element={catalogue(<AllProducts products={products} />)} />
       <Route
         path="/headphones"

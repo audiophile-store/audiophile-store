@@ -35,6 +35,8 @@ A demo e-commerce storefront for audio equipment, built with React, TypeScript a
 - API-backed catalogue with loading states, error handling, and retry
 - Browse products by category (headphones, speakers, earphones) or view the full catalogue
 - Product detail pages with an image gallery, specs, and stock availability
+- Home page with up to four popular product cards in a desktop row and the last 10 recently viewed products
+- Recently viewed history saved as product IDs in localStorage, newest first, with a clear action
 - Slide-in cart with quantity controls that respect the available stock
 - Checkout with form validation, VAT breakdown, shipping, and order confirmation
 - Client-side routing with breadcrumbs and scroll restoration
@@ -88,7 +90,7 @@ production bundle to `dist/`, and `npm run preview` serves that bundle locally.
 src/
 ├── app/          # Redux store and shared constants
 ├── components/   # Reusable UI components
-├── features/     # Redux slices (cart, products, snackbar)
+├── features/     # Redux slices (cart, products, recently viewed, snackbar)
 ├── pages/        # Route-level views
 ├── db/           # Legacy catalogue (unused)
 ├── types/        # Shared TypeScript types
@@ -100,6 +102,8 @@ src/
 This is a portfolio demo, not a production store. The catalogue comes from the read-only
 products service, the cart lives in memory only, and no payment is ever processed.
 Prices are displayed in euros with VAT included.
+Recently viewed history is device-local, recorded only after a product detail loads successfully,
+and resolved against the current catalogue; products no longer in the catalogue are not displayed.
 
 Product images and brand names belong to their respective owners and are used here purely
 for demonstration purposes.

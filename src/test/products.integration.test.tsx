@@ -1,6 +1,6 @@
 import { configureStore } from '@reduxjs/toolkit';
 import { StrictMode } from 'react';
-import { act, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { act, fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { Provider } from 'react-redux';
 import { MemoryRouter, useNavigate } from 'react-router-dom';
 import { SnackbarProvider } from 'notistack';
@@ -9,6 +9,10 @@ import App from '../App';
 import productReducer from '../features/product/productSlice';
 import cartReducer from '../features/cart/cartSlice';
 import snackbarReducer from '../features/snackbar/snackbarSlice';
+import recentlyViewedReducer, {
+  createRecentlyViewedMiddleware,
+  RECENTLY_VIEWED_KEY,
+} from '../features/recentlyViewed/recentlyViewedSlice';
 import { earphones, headphones, products, speakers } from './products';
 import type { Product } from '../types/product';
 
@@ -42,7 +46,11 @@ function mockCatalogue(catalogue: Product[] = products) {
 function NavigationControl() {
   const navigate = useNavigate();
   return (
-    <button onClick={() => navigate(`/article/${speakers.id}`)}>Open next service product</button>
+    <>
+      <button onClick={() => navigate(`/article/${speakers.id}`)}>Open next service product</button>
+      <button onClick={() => navigate(`/article/${headphones.id}`)}>Open headphones</button>
+      <button onClick={() => navigate('/')}>Go home</button>
+    </>
   );
 }
 
@@ -52,7 +60,10 @@ function renderStorefront(path = '/products') {
       products: productReducer,
       cart: cartReducer,
       snackbar: snackbarReducer,
+      recentlyViewed: recentlyViewedReducer,
     },
+    middleware: (getDefaultMiddleware) =>
+      getDefaultMiddleware().prepend(createRecentlyViewedMiddleware()),
   });
 
   render(
@@ -71,6 +82,7 @@ function renderStorefront(path = '/products') {
 }
 
 beforeEach(() => {
+  localStorage.clear();
   fetchMock.mockReset();
   vi.stubGlobal('fetch', fetchMock);
   vi.stubEnv('VITE_PRODUCTS_API_URL', apiUrl);
@@ -101,6 +113,7 @@ describe('products service integration contract', () => {
     );
     expect(screen.getByRole('progressbar', { name: 'Loading products' })).toBeVisible();
     expect(screen.queryByRole('button', { name: 'ADD TO CART' })).not.toBeInTheDocument();
+    expect(store.getState().recentlyViewed.ids).toEqual([]);
   });
 
   it('uses the existing toast when adding a catalogue product to the cart', async () => {
@@ -260,6 +273,115 @@ describe('products service integration contract', () => {
     await screen.findByText(headphones.title);
     expect(screen.queryByText(speakers.title)).not.toBeInTheDocument();
     expect(screen.queryByText(earphones.title)).not.toBeInTheDocument();
+  });
+
+  it('shows only the first four popular products in server order on the home page', async () => {
+    const popularProducts = Array.from({ length: 6 }, (_, index) => ({
+      ...headphones,
+      id: `popular-${index}`,
+      title: `Popular product ${index}`,
+    }));
+    mockCatalogue([earphones, ...popularProducts]);
+    renderStorefront('/');
+
+    const section = await screen.findByRole('region', { name: 'Popular products' });
+    expect(within(section).getAllByRole('heading', { level: 4 }).map((node) => node.textContent))
+      .toEqual(popularProducts.slice(0, 4).map((product) => product.title));
+    expect(within(section).queryByText(popularProducts[4].title)).not.toBeInTheDocument();
+    expect(within(section).queryByText(popularProducts[5].title)).not.toBeInTheDocument();
+  });
+
+  it('records successful views, moves revisited products first, and clears persisted history', async () => {
+    const store = renderStorefront(`/article/${headphones.id}`);
+    await screen.findByRole('heading', { name: headphones.title });
+    await waitFor(() => expect(store.getState().recentlyViewed.ids).toEqual([headphones.id]));
+
+    fireEvent.click(screen.getByRole('button', { name: 'Open next service product' }));
+    await screen.findByRole('heading', { name: speakers.title });
+    await waitFor(() =>
+      expect(store.getState().recentlyViewed.ids).toEqual([speakers.id, headphones.id])
+    );
+
+    fireEvent.click(screen.getByRole('button', { name: 'Open headphones' }));
+    await screen.findByRole('heading', { name: headphones.title });
+    await waitFor(() =>
+      expect(store.getState().recentlyViewed.ids).toEqual([headphones.id, speakers.id])
+    );
+    expect(JSON.parse(localStorage.getItem(RECENTLY_VIEWED_KEY)!)).toEqual([
+      headphones.id,
+      speakers.id,
+    ]);
+
+    fireEvent.click(screen.getByRole('button', { name: 'Go home' }));
+    const recentSection = await screen.findByRole('region', { name: 'Recently viewed' });
+    expect(within(recentSection).getAllByRole('heading', { level: 3 }).map((node) => node.textContent))
+      .toEqual([headphones.title, speakers.title]);
+    fireEvent.click(within(recentSection).getByRole('button', { name: 'Clear' }));
+    expect(store.getState().recentlyViewed.ids).toEqual([]);
+    expect(localStorage.getItem(RECENTLY_VIEWED_KEY)).toBeNull();
+    expect(within(recentSection).getByText('Products you view will appear here.')).toBeVisible();
+  });
+
+  it('restores recent IDs in view order using current catalogue data and skips deleted products', async () => {
+    localStorage.setItem(RECENTLY_VIEWED_KEY, JSON.stringify([speakers.id, 'deleted', earphones.id]));
+    mockCatalogue(products.map((product) => ({ ...product, popularProduct: false })));
+    renderStorefront('/');
+
+    const recentSection = await screen.findByRole('region', { name: 'Recently viewed' });
+    expect(within(recentSection).getAllByRole('heading', { level: 3 }).map((node) => node.textContent))
+      .toEqual([speakers.title, earphones.title]);
+    expect(within(recentSection).getByRole('link', { name: new RegExp(speakers.title) }))
+      .toHaveAttribute('href', `/article/${speakers.id}`);
+    expect(within(recentSection).getAllByText(/123,45/)).toHaveLength(2);
+    expect(screen.getByText('No popular products available.')).toBeVisible();
+    expect(screen.queryByText('deleted')).not.toBeInTheDocument();
+  });
+
+  it('shows separate popular and recent sections with working cart and catalogue actions', async () => {
+    const store = renderStorefront('/');
+    const popularSection = await screen.findByRole('region', { name: 'Popular products' });
+    expect(within(popularSection).getByRole('link', { name: 'View all' }))
+      .toHaveAttribute('href', '/products');
+    expect(screen.getByRole('region', { name: 'Recently viewed' })).toBeVisible();
+    expect(screen.queryByRole('tab')).not.toBeInTheDocument();
+    fireEvent.click(within(popularSection).getByRole('button', {
+      name: `Add to cart: ${headphones.title}`,
+    }));
+    fireEvent.click(within(popularSection).getByRole('button', {
+      name: `Add to cart: ${headphones.title}`,
+    }));
+    expect(store.getState().cart.items[0].quantity).toBe(2);
+    expect(within(popularSection).getByRole('button', {
+      name: `All available stock is in your cart: ${headphones.title}`,
+    })).toBeDisabled();
+  });
+
+  it.each([404, 500])('does not record a product whose detail request fails with HTTP %s', async (status) => {
+    fetchMock.mockImplementation(async (input) =>
+      requestPath(input) === '/products'
+        ? jsonResponse({ products })
+        : jsonResponse({ error: 'Product unavailable' }, status)
+    );
+    const store = renderStorefront(`/article/${headphones.id}`);
+    await waitFor(() => expect(store.getState().products.details[headphones.id]?.status)
+      .toBe(status === 404 ? 'not-found' : 'failed'));
+    expect(store.getState().recentlyViewed.ids).toEqual([]);
+    expect(localStorage.getItem(RECENTLY_VIEWED_KEY)).toBeNull();
+  });
+
+  it('records a view only after the detail request succeeds', async () => {
+    let resolveDetail!: (response: Response) => void;
+    fetchMock.mockImplementation(async (input) =>
+      requestPath(input) === '/products'
+        ? jsonResponse({ products })
+        : new Promise<Response>((resolve) => { resolveDetail = resolve; })
+    );
+    const store = renderStorefront(`/article/${headphones.id}`);
+    await screen.findByRole('progressbar', { name: 'Loading products' });
+    expect(store.getState().recentlyViewed.ids).toEqual([]);
+    expect(localStorage.getItem(RECENTLY_VIEWED_KEY)).toBeNull();
+    await act(async () => resolveDetail(jsonResponse(headphones)));
+    await waitFor(() => expect(store.getState().recentlyViewed.ids).toEqual([headphones.id]));
   });
 
   it('shows service products in the existing admin without sending write requests', async () => {
