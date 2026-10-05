@@ -117,14 +117,13 @@ export default function Article() {
         </Box>
         <Box className="Article-Description">
           <Box className="Article-Title">
-            <Box className="Article-Metadata">
             {product.newProduct && (
-              <Typography className="New-Product-Flag" variant="inherit">
-                NEW PRODUCT
-              </Typography>
+              <Box className="Article-Metadata">
+                <Typography className="New-Product-Flag" variant="inherit">
+                  NEW PRODUCT
+                </Typography>
+              </Box>
             )}
-              <Typography className="Article-Id" variant="body2">SKU {product.id}</Typography>
-            </Box>
             <Typography variant="h4">
               {product.title}
             </Typography>
@@ -212,6 +211,7 @@ export default function Article() {
               {product.inBox.length ? <ul>{product.inBox.map((item, index) => <li key={index}>{item.quantity} × {item.name}</li>)}</ul> : <Typography>No box contents available.</Typography>}
             </Box>
           </Box>
+          <Typography className="Article-Id" variant="body2">SKU {product.id}</Typography>
         </Box>
       </Box>
     </Box>

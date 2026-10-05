@@ -355,9 +355,8 @@
 
 .Article-Description .Article-Id {
   width: auto;
-  margin-left: auto;
   font-size: 12px;
-  text-align: right;
+  text-align: left;
 }
 
 .Article-Price-Stock {
@@ -449,13 +448,18 @@
   background: #2e7d32;
 }
 
-.Article-Copy {
-  margin: 0;
+.Article-Details [role='tabpanel'],
+.Article-Details [role='tabpanel'] .MuiTypography-root {
+  font-family: 'Manrope', sans-serif;
   color: #757575;
-  font-size: 14px;
+  font-size: 13px;
   font-weight: 400;
   line-height: 1.65;
   opacity: 1;
+}
+
+.Article-Details .Article-Copy {
+  margin: 0;
 }
 
 .Article-Details {
@@ -483,7 +487,29 @@
   padding-left: 18px;
 }
 
+.Article-Details li + li {
+  margin-top: 12px;
+}
+
 @media (max-width: 599px) {
+  .Article-Description {
+    padding: 24px 20px;
+  }
+
+  .Article-Benefits-Container {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+
+  .Article-Benefits-Container .Article-Benefits {
+    min-width: 0;
+    flex-direction: column;
+    gap: 6px;
+    white-space: normal;
+    text-align: center;
+  }
+
   .Article .Article-Controls {
     align-items: stretch;
   }

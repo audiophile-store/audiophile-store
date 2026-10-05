@@ -78,6 +78,20 @@ beforeEach(() => {
 });
 
 describe('products service integration contract', () => {
+  it('places the SKU at the bottom of the product card without empty title metadata', async () => {
+    mockCatalogue([{ ...headphones, newProduct: false }]);
+    renderStorefront(`/article/${headphones.id}`);
+
+    const title = await screen.findByRole('heading', { name: headphones.title });
+    const card = title.closest('.Article-Description');
+    expect(card).not.toBeNull();
+    expect(card?.lastElementChild).toBe(screen.getByText(`SKU ${headphones.id}`));
+    expect(card?.querySelector('.Article-Metadata')).toBeNull();
+    expect(screen.getByText('2-Year Warranty')).toBeVisible();
+    expect(screen.getByText('Fast shipping')).toBeVisible();
+    expect(screen.getByText('Secure payment')).toBeVisible();
+  });
+
   it('keeps the product detail skeleton visible when development loading is forced', async () => {
     vi.stubEnv('VITE_FORCE_PRODUCTS_LOADING', 'true');
     const store = renderStorefront(`/article/${headphones.id}`);
