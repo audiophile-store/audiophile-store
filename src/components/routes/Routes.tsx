@@ -19,7 +19,7 @@ const PageRoutes = () => {
   return (
     <Routes>
       <Route path="/" element={catalogue(<Home />, false)} />
-      <Route path="/products" element={catalogue(<AllProducts products={products} />)} />
+      <Route path="/products" element={<AllProducts products={products} />} />
       <Route
         path="/headphones"
         element={catalogue(

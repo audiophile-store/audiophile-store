@@ -36,6 +36,7 @@ A demo e-commerce storefront for audio equipment, built with React, TypeScript a
 - Browse products by category (headphones, speakers, earphones) or view the full catalogue
 - Product detail pages with an image gallery, specs, and stock availability
 - Home page with up to four popular product cards in a desktop row and the last 10 recently viewed products
+- Popular products "View all" opens `/products?popular=true`, filtering the current catalogue on the frontend; `/products` still shows the full catalogue
 - Home loading skeletons matching the popular and compact recently viewed card layouts
 - Recently viewed history saved as product IDs in localStorage, newest first, with a clear action
 - Slide-in cart with quantity controls that respect the available stock
