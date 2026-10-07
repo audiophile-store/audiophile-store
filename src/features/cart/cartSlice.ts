@@ -5,11 +5,13 @@ import type { CartItem } from '../../types/product';
 interface CartState {
   items: CartItem[];
   isCartOpen: boolean;
+  checkoutItems: { id: string; quantity: number }[] | null;
 }
 
 const initialState: CartState = {
   items: [],
   isCartOpen: false,
+  checkoutItems: null,
 };
 
 export const cartSlice = createSlice({
@@ -37,6 +39,10 @@ export const cartSlice = createSlice({
       if (!item) {
         return;
       }
+      const submittedItem = state.checkoutItems?.find((entry) => entry.id === item.id);
+      if (submittedItem) {
+        submittedItem.quantity = Math.min(submittedItem.quantity, Math.max(0, item.quantity - 1));
+      }
       if (item.quantity <= 1) {
         state.items = state.items.filter((entry) => entry.id !== action.payload.id);
       } else {
@@ -45,6 +51,24 @@ export const cartSlice = createSlice({
     },
     clearCart: (state) => {
       state.items = [];
+      state.checkoutItems?.forEach((item) => {
+        item.quantity = 0;
+      });
+    },
+    beginCheckout: (state, action: PayloadAction<{ id: string; quantity: number }[]>) => {
+      state.checkoutItems = action.payload.map((item) => ({ ...item }));
+    },
+    cancelCheckout: (state) => {
+      state.checkoutItems = null;
+    },
+    completeCheckout: (state) => {
+      // Only consume submitted units still in the cart, not later additions or re-added items.
+      for (const submittedItem of state.checkoutItems ?? []) {
+        const item = state.items.find((entry) => entry.id === submittedItem.id);
+        if (item) item.quantity -= Math.min(item.quantity, submittedItem.quantity);
+      }
+      state.items = state.items.filter((item) => item.quantity > 0);
+      state.checkoutItems = null;
     },
     openCart: (state) => {
       state.isCartOpen = true;
@@ -55,7 +79,16 @@ export const cartSlice = createSlice({
   },
 });
 
-export const { addToCart, clearCart, openCart, closeCart, increaseCart, decreaseCart } =
-  cartSlice.actions;
+export const {
+  addToCart,
+  clearCart,
+  openCart,
+  closeCart,
+  increaseCart,
+  decreaseCart,
+  beginCheckout,
+  cancelCheckout,
+  completeCheckout,
+} = cartSlice.actions;
 
 export default cartSlice.reducer;
