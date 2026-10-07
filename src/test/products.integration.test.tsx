@@ -8,6 +8,7 @@ import { beforeEach, describe, expect, it, vi } from 'vitest';
 import App from '../App';
 import productReducer from '../features/product/productSlice';
 import cartReducer from '../features/cart/cartSlice';
+import ordersReducer from '../features/orders/ordersSlice';
 import snackbarReducer from '../features/snackbar/snackbarSlice';
 import recentlyViewedReducer, {
   createRecentlyViewedMiddleware,
@@ -61,6 +62,7 @@ function renderStorefront(path = '/products') {
     reducer: {
       products: productReducer,
       cart: cartReducer,
+      orders: ordersReducer,
       snackbar: snackbarReducer,
       recentlyViewed: recentlyViewedReducer,
     },

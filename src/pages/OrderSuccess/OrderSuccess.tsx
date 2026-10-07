@@ -1,13 +1,57 @@
-import { Box, Container, Typography, Button, Card, CardContent, Divider } from '@mui/material';
+import {
+  Box,
+  Container,
+  Typography,
+  Button,
+  Card,
+  CardContent,
+  Divider,
+  Alert,
+} from '@mui/material';
 import { useNavigate, useLocation } from 'react-router-dom';
 import CheckCircleIcon from '@mui/icons-material/CheckCircle';
 import './OrderSuccess.css';
-import { formatCurrency } from '../../utils/utils';
+import { isOrderConfirmation } from '../../features/orders/ordersApi';
+import OrderDetails from '../../features/orders/OrderDetails';
+import { useEffect } from 'react';
+import { useAppDispatch, useAppSelector } from '../../app/hooks';
+import { acknowledgeOrder } from '../../features/orders/ordersSlice';
 
 const OrderSuccess = () => {
   const navigate = useNavigate();
   const location = useLocation();
-  const { orderId, total } = (location.state as { orderId?: string; total?: string } | null) || {};
+  const dispatch = useAppDispatch();
+  const orderState = useAppSelector((state) => state.orders);
+  const state: unknown = location.state;
+  const routeConfirmation =
+    typeof state === 'object' && state !== null && 'confirmation' in state
+      ? state.confirmation
+      : null;
+  const confirmation = isOrderConfirmation(routeConfirmation)
+    ? routeConfirmation
+    : orderState.confirmation;
+
+  useEffect(() => {
+    if (
+      orderState.status === 'succeeded' &&
+      orderState.confirmation?.orderId === confirmation?.orderId
+    ) {
+      dispatch(acknowledgeOrder());
+    }
+  }, [orderState.status, orderState.confirmation, confirmation, dispatch]);
+
+  if (!isOrderConfirmation(confirmation)) {
+    return (
+      <Container maxWidth="md" className="OrderSuccess-Container">
+        <Alert severity="warning" sx={{ my: 4 }}>
+          No confirmed order is available. Check with the store if you already submitted an order.
+        </Alert>
+        <Button variant="contained" onClick={() => navigate('/products')}>
+          Continue Shopping
+        </Button>
+      </Container>
+    );
+  }
 
   return (
     <Container maxWidth="md" className="OrderSuccess-Container">
@@ -29,24 +73,12 @@ const OrderSuccess = () => {
             </Typography>
             <Divider sx={{ my: 2 }} />
 
-            <Box display="flex" justifyContent="space-between" mb={2}>
-              <Typography variant="body1">Order ID:</Typography>
-              <Typography variant="body1" fontWeight="bold">
-                {orderId || 'N/A'}
-              </Typography>
-            </Box>
-
-            <Box display="flex" justifyContent="space-between" mb={2}>
-              <Typography variant="body1">Total Amount:</Typography>
-              <Typography variant="body1" fontWeight="bold" color="primary">
-                {total || formatCurrency(0)}
-              </Typography>
-            </Box>
+            <OrderDetails order={confirmation} />
 
             <Divider sx={{ my: 2 }} />
 
             <Typography variant="body2" color="text.secondary">
-              A confirmation email has been sent to your email address.
+              Payment is cash on delivery.
             </Typography>
           </CardContent>
         </Card>

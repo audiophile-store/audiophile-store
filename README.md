@@ -40,7 +40,7 @@ A demo e-commerce storefront for audio equipment, built with React, TypeScript a
 - Home loading skeletons matching the popular and compact recently viewed card layouts
 - Recently viewed history saved as product IDs in localStorage, newest first, with a clear action
 - Slide-in cart with quantity controls that respect the available stock
-- Checkout with form validation, VAT breakdown, shipping, and order confirmation
+- API-backed cash checkout with form validation, VAT breakdown, shipping, and server-confirmed orders
 - Client-side routing with breadcrumbs and scroll restoration
 - Responsive layout for mobile, tablet, and desktop
 
@@ -71,7 +71,47 @@ npm run dev
 
 The app runs at `http://localhost:5173` and expects `audiophile-products-service` at
 `http://localhost:3000`, configured through `VITE_PRODUCTS_API_URL` in `.env.local`.
-For production, set the same variable to the service URL in Vercel.
+Orders use `orders-service` at `http://localhost:3001`, configured through
+`VITE_ORDERS_API_URL`. Set both API variables to their public service base URLs in
+Vercel for production. Vite variables are public; never put secrets in them.
+Restart Vite after changing env configuration. The orders backend must allow the
+frontend origin (`http://localhost:5173` locally) through its CORS configuration.
+
+### Orders integration
+
+Checkout sends one credential-free JSON `POST /orders` with only customer name,
+email and phone, shipping address, `paymentMethod: "cash"`, and product IDs/quantities.
+Prices, stock and totals are never sent. Text is trimmed and validated against the
+[orders API contract](https://github.com/audiophile-store/orders-service#http-api):
+name/city/country up to 100 characters, email 254, phone 32, address 200, ZIP 20;
+1–50 distinct product IDs (up to 100 characters), quantities 1–99.
+
+Only HTTP 201 with a valid confirmation matching the requested IDs and quantities
+is successful. The server's product snapshots, order ID and totals are used for
+the modal and `/order-success`; EUR cent amounts are divided by 100 for display.
+The form draft, pending request lock, error and confirmation live in a separate Redux
+orders slice, so they survive navigation away from checkout. The confirmation is also
+passed in browser navigation state, independent of cart data. Confirmed success removes
+only submitted units still present in the cart: products or extra quantities added while
+waiting are preserved, including items discarded and re-added during the request.
+The existing modal redirects after three seconds; if checkout was closed, reopening it
+shows the saved success or failure without resubmitting. `/order-success` can also show
+the last confirmed order from Redux. Viewing the confirmation resets the form for a new
+order. Direct access without a valid confirmation shows a warning, not a fabricated
+successful order. Drafts and Redux confirmation are memory-only and do not survive a
+full page reload; no customer data is written to localStorage. There is no
+order-history API or permanent confirmation storage in this frontend.
+
+Submission is locked while pending. HTTP 400, 409, 413, 422, 503 and 500 show
+actionable errors; network failures, unexpected statuses and invalid responses show
+an uncertain-outcome warning. Errors preserve the cart and form. There is **no
+automatic retry**: the backend has no idempotency support, so a lost response may
+mean an order was already saved. Check with the store before manually resubmitting
+an uncertain request. Cash on delivery is the only supported method; no payment
+or confirmation email is processed by this UI.
+Phone uses a telephone input/keyboard and autofill, preserving `+`, formatting and
+leading zeros. ZIP uses a text input and postal-code autofill for international codes
+with letters and leading zeros. Both are strings, not numeric quantities.
 
 `npm run build` type-checks the project and writes a
 production bundle to `dist/`, and `npm run preview` serves that bundle locally.
@@ -102,7 +142,8 @@ src/
 ## Notes
 
 This is a portfolio demo, not a production store. The catalogue comes from the read-only
-products service, the cart lives in memory only, and no payment is ever processed.
+products service, orders are persisted through the orders service, the cart lives
+in memory only, and no payment is ever processed.
 Prices are displayed in euros with VAT included.
 Recently viewed history is device-local, recorded only after a product detail loads successfully,
 and resolved against the current catalogue; products no longer in the catalogue are not displayed.
@@ -112,9 +153,7 @@ for demonstration purposes.
 
 ## What I'd do next
 
-- Persist orders through a separate service
 - Persist the cart across page reloads
-- Add unit tests for the checkout logic
 - Finish the admin panel (product create, edit, and delete are currently UI-only)
 - Add an error boundary and a 404 page
 
